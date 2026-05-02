@@ -1148,5 +1148,604 @@
     if (e.key === 'ArrowLeft'  || e.key === 'ArrowUp')   go(-1);
   });
 </script>
+  <!-- ══════════════════════════════════════════════════════════════
+     VERIPURA F&F CHAT — paste this entire block just before </body>
+     Requires: same Cloudflare Worker as investor site
+     No EmailJS needed — actions link directly to email/calendar
+══════════════════════════════════════════════════════════════ -->
+
+<style>
+/* ── F&F Chat floating button ── */
+#ff-chat-btn {
+  position: fixed;
+  top: 90px;
+  right: 80px;
+  z-index: 9000;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--gold);
+  color: var(--navy);
+  border: none;
+  border-radius: 40px;
+  padding: 10px 18px 10px 13px;
+  font-family: var(--sans);
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 4px 20px rgba(212,168,71,0.35);
+  transition: transform 0.18s, box-shadow 0.18s;
+  white-space: nowrap;
+}
+#ff-chat-btn:hover {
+  transform: translateY(2px);
+  box-shadow: 0 8px 28px rgba(212,168,71,0.45);
+}
+#ff-chat-btn svg {
+  flex-shrink: 0;
+}
+
+/* ── Chat panel ── */
+#ff-chat-panel {
+  position: fixed;
+  top: 136px;
+  right: 80px;
+  width: 380px;
+  max-height: 560px;
+  background: #0d1e33;
+  border: 1px solid var(--bord);
+  border-radius: 12px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.6);
+  display: none;
+  flex-direction: column;
+  z-index: 9001;
+  overflow: hidden;
+  font-family: var(--sans);
+}
+#ff-chat-panel.open {
+  display: flex;
+}
+
+/* ── Panel header ── */
+.ff-chat-header {
+  background: var(--navy);
+  border-bottom: 1px solid var(--bord);
+  padding: 14px 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-shrink: 0;
+}
+.ff-chat-header-avatars {
+  display: flex;
+  flex-shrink: 0;
+}
+.ff-chat-header-avatars img {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid var(--gold);
+  margin-left: -8px;
+}
+.ff-chat-header-avatars img:first-child {
+  margin-left: 0;
+}
+.ff-chat-header-text {
+  flex: 1;
+  min-width: 0;
+}
+.ff-chat-header-title {
+  font-family: var(--serif);
+  font-size: 14px;
+  color: #fff;
+  line-height: 1.2;
+}
+.ff-chat-header-title span { color: var(--gold); }
+.ff-chat-header-sub {
+  font-family: var(--mono);
+  font-size: 9px;
+  color: var(--dim);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-top: 3px;
+}
+.ff-chat-close {
+  background: rgba(255,255,255,0.08);
+  border: none;
+  color: var(--dim);
+  font-size: 15px;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: background 0.15s;
+}
+.ff-chat-close:hover { background: rgba(255,255,255,0.16); color: #fff; }
+
+/* ── Messages ── */
+.ff-chat-messages {
+  flex: 1;
+  overflow-y: auto;
+  padding: 16px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  scroll-behavior: smooth;
+}
+.ff-chat-messages::-webkit-scrollbar { width: 4px; }
+.ff-chat-messages::-webkit-scrollbar-track { background: transparent; }
+.ff-chat-messages::-webkit-scrollbar-thumb { background: var(--bord); border-radius: 2px; }
+
+/* ── Suggestion chips ── */
+.ff-chat-suggestions {
+  padding: 0 14px 10px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+  flex-shrink: 0;
+}
+.ff-chat-suggestion {
+  background: rgba(212,168,71,0.1);
+  border: 1px solid rgba(212,168,71,0.35);
+  color: var(--gold);
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.06em;
+  padding: 6px 12px;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: background 0.15s;
+  white-space: nowrap;
+}
+.ff-chat-suggestion:hover { background: rgba(212,168,71,0.2); }
+
+/* ── Message bubbles ── */
+.ff-msg {
+  display: flex;
+  gap: 9px;
+  align-items: flex-start;
+  animation: ffFadeUp 0.25s ease both;
+}
+@keyframes ffFadeUp {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.ff-msg-avatar {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 1.5px solid var(--gold);
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+.ff-msg-content {
+  flex: 1;
+  min-width: 0;
+}
+.ff-msg-name {
+  font-family: var(--mono);
+  font-size: 9px;
+  color: var(--gold);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+.ff-msg-bubble {
+  background: #152d4e;
+  border: 1px solid var(--bord);
+  border-radius: 2px 10px 10px 10px;
+  padding: 10px 13px;
+  font-size: 13px;
+  color: var(--sky);
+  line-height: 1.6;
+}
+.ff-msg-bubble a {
+  color: var(--gold);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.ff-msg-bubble strong { color: #fff; }
+
+/* User bubble */
+.ff-msg.user {
+  flex-direction: row-reverse;
+}
+.ff-msg.user .ff-msg-bubble {
+  background: rgba(212,168,71,0.12);
+  border-color: rgba(212,168,71,0.3);
+  border-radius: 10px 2px 10px 10px;
+  color: #fff;
+}
+
+/* Typing indicator */
+.ff-typing {
+  display: flex;
+  gap: 5px;
+  align-items: center;
+  padding: 8px 4px;
+}
+.ff-typing span {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--dim);
+  animation: ffBounce 1.1s infinite ease-in-out;
+}
+.ff-typing span:nth-child(2) { animation-delay: 0.18s; }
+.ff-typing span:nth-child(3) { animation-delay: 0.36s; }
+@keyframes ffBounce {
+  0%, 80%, 100% { transform: translateY(0); opacity: 0.4; }
+  40%            { transform: translateY(-5px); opacity: 1; }
+}
+
+/* ── Input row ── */
+.ff-chat-input-row {
+  border-top: 1px solid var(--bord);
+  padding: 10px 12px;
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  flex-shrink: 0;
+  background: #0a1928;
+}
+.ff-chat-input {
+  flex: 1;
+  background: #0d1e33;
+  border: 1px solid var(--bord);
+  border-radius: 6px;
+  color: #fff;
+  font-family: var(--sans);
+  font-size: 13px;
+  padding: 9px 12px;
+  outline: none;
+  transition: border-color 0.15s;
+}
+.ff-chat-input:focus { border-color: var(--gold); }
+.ff-chat-input::placeholder { color: var(--dim); }
+.ff-chat-send {
+  background: var(--gold);
+  border: none;
+  border-radius: 6px;
+  color: var(--navy);
+  font-size: 16px;
+  width: 36px;
+  height: 36px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: opacity 0.15s;
+}
+.ff-chat-send:hover { opacity: 0.85; }
+.ff-chat-send:disabled { opacity: 0.35; cursor: default; }
+
+/* ── Mic button ── */
+.ff-mic-btn {
+  background: transparent;
+  border: 1px solid var(--bord);
+  border-radius: 6px;
+  color: var(--dim);
+  font-size: 15px;
+  width: 36px;
+  height: 36px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: border-color 0.15s, color 0.15s;
+}
+.ff-mic-btn:hover { border-color: var(--gold); color: var(--gold); }
+.ff-mic-btn.ff-mic-active { border-color: var(--gold); color: var(--gold); background: rgba(212,168,71,0.1); }
+</style>
+
+<!-- Floating button -->
+<button id="ff-chat-btn" onclick="ffChatToggle()">
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+  </svg>
+  Ask Onno &amp; Thomas
+</button>
+
+<!-- Chat panel -->
+<div id="ff-chat-panel">
+  <div class="ff-chat-header">
+    <div class="ff-chat-header-avatars">
+      <img src="Onno_no_BG.jpeg" alt="Onno">
+      <img src="Thomas no BG.png" alt="Thomas">
+    </div>
+    <div class="ff-chat-header-text">
+      <div class="ff-chat-header-title">Veri<span>Pura</span> · Friends &amp; Family</div>
+      <div class="ff-chat-header-sub">Onno &amp; Thomas answer</div>
+    </div>
+    <button class="ff-chat-close" onclick="ffChatToggle()">✕</button>
+  </div>
+
+  <div class="ff-chat-messages" id="ffMessages"></div>
+
+  <div class="ff-chat-suggestions" id="ffSuggestions">
+    <button class="ff-chat-suggestion" onclick="ffAsk(this.textContent)">What are the terms?</button>
+    <button class="ff-chat-suggestion" onclick="ffAsk(this.textContent)">Why invest now?</button>
+    <button class="ff-chat-suggestion" onclick="ffAsk(this.textContent)">What is a SAFE?</button>
+    <button class="ff-chat-suggestion" onclick="ffAsk(this.textContent)">What is the token warrant?</button>
+  </div>
+
+  <div class="ff-chat-input-row">
+    <button class="ff-mic-btn" id="ffMicBtn" onclick="ffToggleMic()" title="Speak your question">🎤</button>
+    <input type="text" class="ff-chat-input" id="ffInput"
+      placeholder="Ask anything about this offer…"
+      onkeydown="if(event.key==='Enter' && !event.shiftKey){ event.preventDefault(); ffSend(); }">
+    <button class="ff-chat-send" id="ffSendBtn" onclick="ffSend()">➤</button>
+  </div>
+</div>
+
+<script>
+// ── F&F CHATBOT ──────────────────────────────────────────────
+
+const FF_ONNO_SRC   = 'Onno_no_BG.jpeg';
+const FF_THOMAS_SRC = 'Thomas no BG.png';
+
+const FF_SYSTEM = `IDENTITY TAG — MANDATORY ON EVERY RESPONSE: Begin every single response with either [ONNO] or [THOMAS] on its own. This tag controls which avatar and name is shown. It must appear even on short responses. No exceptions.
+
+You are an AI assistant representing VeriPura's founding team — Onno Stienen (CEO) and Thomas Oberlin (COO) — on the VeriPura Friends and Family investment page. You answer questions warmly and honestly from people who know the founders personally or through their network. These are not professional investors — they are friends, family and close contacts considering a small personal investment.
+
+FOUNDER ROUTING:
+- Thomas handles: investment terms, SAFE structure, token warrant, use of proceeds, returns, incorporation, financial questions, what happens next after investing
+- Onno handles: the problem VeriPura solves, how the platform works, the market opportunity, regulations, the team, traction, why now
+
+IDENTIFICATION — FIRST MESSAGE ONLY: After the mandatory tag, open with "Onno here —" or "Thomas here —" then answer immediately. Never mention your name again in subsequent messages. The identity tag must still appear on every response.
+
+FOUNDER HANDOFF: If a question belongs to the other founder's domain, hand off in one sentence only — no answer:
+- Onno to Thomas: "[ONNO] Let me hand you to Thomas on that one."
+- Thomas to Onno: "[THOMAS] Let me hand you to Onno on that one."
+The handoff IS the full response. Do not answer in the same message.
+
+CO-FOUNDER QUESTIONS: If someone asks about a specific founder by name, that founder answers in first person always.
+
+TONE: Warm, personal, direct. These are people who know us or are one step removed. Not pitchy. Not corporate. Like a conversation over coffee. Use contractions. Be honest about where we are in the journey.
+
+RESPONSE LENGTH — HARD RULES:
+- Maximum 3 sentences per response. No exceptions.
+- Never dump all the terms or all the details at once. Answer only what was asked.
+- ONE follow-up question per response maximum. Never ask two questions.
+
+THE FRIENDS AND FAMILY OFFER — EXACT TERMS:
+- Round: Friends and Family
+- Amount raising: €50,000
+- Instrument: SAFE (Simple Agreement for Future Equity)
+- Minimum ticket: €1,000
+- Discount: 20% on next priced round
+- Conversion: Next priced round (the Seed round, currently being raised at €750K at a €3.75M post-money cap)
+- Also included: Token Warrant — right to purchase VeriPura platform tokens at a significant discount; vested conversion mechanism from token to stablecoin
+- Use of proceeds: Run 4 pilots with importers and freight forwarders; convert at least 2 to paying clients; advance platform and AI agent capabilities; file provisional patent on core technology; formally incorporate VeriPura
+
+WHAT A SAFE IS (explain simply if asked): A SAFE is not a loan and not shares yet. It is a promise that when VeriPura raises its next proper funding round at a fixed valuation, your investment converts into equity automatically — at a 20% discount to whatever price the new investors pay. You get in early, at better terms, without needing lawyers or complex paperwork now.
+
+THE TOKEN WARRANT (explain simply if asked): VeriPura is building a token that will be used on the platform by importers and freight forwarders. Friends and Family investors receive a warrant — a right — to buy those tokens at a significant discount before they are available to the public. There is also a vested mechanism to convert tokens to stablecoin over time, giving investors a liquid return path alongside the equity upside.
+
+THE SEED ROUND CONTEXT: The Friends and Family round feeds directly into the Seed round. The Seed is a €750K SAFE at a €3.75M post-money cap with a 20% discount. Friends and Family investors convert into the Seed round at that same 20% discount, meaning they effectively get equity at a lower price than Seed investors.
+
+TRACTION AND VALIDATION (use naturally, not as a list):
+- MVP live at core.veripura.com
+- Selected as 1 of 10 from 220 applicants for the Space-F Food Innovation Accelerator
+- Selected for the IOTA Blockchain Accelerator (1 of 30)
+- 4 pilots in active discussion, 2 verbal commitments as of May 2026
+
+THE TEAM:
+- Onno Stienen, CEO: food entrepreneur, 18 years as food exporter and importer, deep EU and Thai industry relationships, lived the problem VeriPura solves
+- Thomas Oberlin, COO: led 3 prior startups, patent holder, award-winning solutions, disrupted markets across agritech, data centers and telecom
+- John Wotherspoon, Fractional CTO: blockchain entrepreneur, distributed systems architect, international solutions delivery
+
+MOVING PEOPLE TO ACTION — always use inline links, never tell them to go to another slide:
+- To schedule a meeting: https://calendar.app.google/1iwueN5pPtQsDfvT9
+- To request documents or ask questions by email: thomas@veripura.com or onno@veripura.com
+- Always phrase it as the founders reaching out, not the visitor: "Send Thomas an email at thomas@veripura.com and we will come back to you"
+
+WHEN TO MOVE TO ACTION:
+- After 2–3 exchanges where genuine interest is clear, invite them to take a next step naturally
+- Never push on first message
+- If someone says they want to invest, are ready, or asks how to proceed: give them the calendar link and Thomas's email in the same response
+- If someone wants more information first: offer to send documents via thomas@veripura.com
+- If someone is not ready but interested: "No problem — drop Thomas a note at thomas@veripura.com and we will keep you posted as the round fills"
+
+WHAT NOT TO DO:
+- Never say "Thanks for your interest" or "Feel free to reach out" — always frame it as the founders following up
+- Never give specific financial, tax or legal advice — say "worth checking with your own advisor on the tax side"
+- Never claim guaranteed returns
+- Never pressure anyone — this is friends and family, the relationship matters more than the cheque
+- Never mention competitor products or other investment platforms
+- Do not refer to VeriPura as a SaaS company
+- Do not say "AI-powered" — say "agentic workflows" or "50+ orchestrated AI agents"
+
+CURRENT DATE: May 2026. The Friends and Family round is open now. The Seed round is running in parallel.`;
+
+// ── State ──────────────────────────────────────────────────
+let ffHistory = [];
+let ffPanelOpen = false;
+
+// ── Toggle ─────────────────────────────────────────────────
+function ffChatToggle() {
+  ffPanelOpen = !ffPanelOpen;
+  document.getElementById('ff-chat-panel').classList.toggle('open', ffPanelOpen);
+  if (ffPanelOpen && ffHistory.length === 0) ffOpeningMessage();
+}
+
+// ── Opening message ────────────────────────────────────────
+function ffOpeningMessage() {
+  const opening = "Thomas here — glad you stopped by. This is our Friends and Family round, and the minimum is just €1,000, so it's designed to be accessible. What would you like to know?";
+  ffAddBotMessage('thomas', 'Thomas Oberlin', opening);
+  ffHistory.push({ role: 'assistant', content: opening });
+}
+
+// ── Add messages ───────────────────────────────────────────
+function ffAddUserMessage(text) {
+  const msgs = document.getElementById('ffMessages');
+  const div = document.createElement('div');
+  div.className = 'ff-msg user';
+  div.innerHTML = `<div class="ff-msg-bubble">${ffEscape(text)}</div>`;
+  msgs.appendChild(div);
+  msgs.scrollTop = msgs.scrollHeight;
+}
+
+function ffAddBotMessage(founderKey, founderName, text) {
+  const msgs = document.getElementById('ffMessages');
+  const src = founderKey === 'onno' ? FF_ONNO_SRC : FF_THOMAS_SRC;
+  const div = document.createElement('div');
+  div.className = 'ff-msg';
+  div.innerHTML = `
+    <img class="ff-msg-avatar" src="${src}" alt="${founderName}">
+    <div class="ff-msg-content">
+      <div class="ff-msg-name">${founderName}</div>
+      <div class="ff-msg-bubble">${ffFormat(text)}</div>
+    </div>`;
+  msgs.appendChild(div);
+  msgs.scrollTop = msgs.scrollHeight;
+}
+
+function ffAddTyping() {
+  const msgs = document.getElementById('ffMessages');
+  const div = document.createElement('div');
+  div.className = 'ff-msg';
+  div.id = 'ffTyping';
+  div.innerHTML = `
+    <div class="ff-msg-bubble" style="padding:8px 14px;">
+      <div class="ff-typing"><span></span><span></span><span></span></div>
+    </div>`;
+  msgs.appendChild(div);
+  msgs.scrollTop = msgs.scrollHeight;
+}
+
+function ffRemoveTyping() {
+  const t = document.getElementById('ffTyping');
+  if (t) t.remove();
+}
+
+// ── Detect founder from tag ────────────────────────────────
+function ffDetectFounder(raw) {
+  if (/^\[ONNO\]/i.test(raw.trim())) return { key: 'onno', name: 'Onno Stienen' };
+  return { key: 'thomas', name: 'Thomas Oberlin' };
+}
+
+// ── Format reply — linkify emails and URLs ─────────────────
+function ffFormat(text) {
+  let t = ffEscape(text);
+  // URLs
+  t = t.replace(/(https?:\/\/[^\s<]+)/g, '<a href="$1" target="_blank">$1</a>');
+  // Emails
+  t = t.replace(/([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})/g,
+    '<a href="mailto:$1">$1</a>');
+  return t;
+}
+
+function ffEscape(str) {
+  return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+// ── Suggestion chips ───────────────────────────────────────
+function ffAsk(text) {
+  document.getElementById('ffSuggestions').style.display = 'none';
+  document.getElementById('ffInput').value = text;
+  ffSend();
+}
+
+// ── Send ───────────────────────────────────────────────────
+async function ffSend() {
+  const input   = document.getElementById('ffInput');
+  const sendBtn = document.getElementById('ffSendBtn');
+  const text    = input.value.trim();
+  if (!text) return;
+
+  document.getElementById('ffSuggestions').style.display = 'none';
+  ffAddUserMessage(text);
+  input.value = '';
+  sendBtn.disabled = true;
+  ffAddTyping();
+
+  ffHistory.push({ role: 'user', content: text });
+
+  try {
+    const response = await fetch('https://veripura-chat.tomsoberlin.workers.dev', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 400,
+        system: FF_SYSTEM,
+        messages: ffHistory
+      })
+    });
+
+    const data = await response.json();
+    const rawReply = data.content && data.content[0]
+      ? data.content[0].text
+      : "[THOMAS] Sorry, something went wrong — drop me a note at thomas@veripura.com and I'll come straight back to you.";
+
+    const reply   = rawReply.replace(/^\s*\[(ONNO|THOMAS)\]\s*/i, '').trim();
+    const founder = ffDetectFounder(rawReply);
+
+    ffHistory.push({ role: 'assistant', content: reply });
+    ffRemoveTyping();
+    ffAddBotMessage(founder.key, founder.name, reply);
+
+  } catch(e) {
+    ffRemoveTyping();
+    ffAddBotMessage('thomas', 'Thomas Oberlin',
+      'Sorry, something went wrong on my end — drop me a line at thomas@veripura.com and I\'ll come straight back to you.');
+  }
+
+  sendBtn.disabled = false;
+  input.focus();
+}
+
+// ── Speech to text ─────────────────────────────────────────
+let ffRecognition = null;
+let ffMicRunning  = false;
+
+function ffToggleMic() {
+  const btn = document.getElementById('ffMicBtn');
+  const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+  if (!SpeechRecognition) {
+    alert('Voice input works in Chrome and Edge.');
+    return;
+  }
+  if (ffMicRunning) { ffRecognition.stop(); return; }
+
+  ffRecognition = new SpeechRecognition();
+  ffRecognition.lang = 'en-US';
+  ffRecognition.interimResults = false;
+  ffRecognition.maxAlternatives = 1;
+
+  ffRecognition.onstart = () => {
+    ffMicRunning = true;
+    btn.classList.add('ff-mic-active');
+    document.getElementById('ffInput').placeholder = 'Listening…';
+  };
+  ffRecognition.onresult = (e) => {
+    document.getElementById('ffInput').value = e.results[0][0].transcript;
+    ffMicRunning = false;
+    btn.classList.remove('ff-mic-active');
+    document.getElementById('ffInput').placeholder = 'Ask anything about this offer…';
+    setTimeout(ffSend, 400);
+  };
+  ffRecognition.onerror = () => {
+    ffMicRunning = false;
+    btn.classList.remove('ff-mic-active');
+    document.getElementById('ffInput').placeholder = 'Ask anything about this offer…';
+  };
+  ffRecognition.onend = () => {
+    ffMicRunning = false;
+    btn.classList.remove('ff-mic-active');
+    document.getElementById('ffInput').placeholder = 'Ask anything about this offer…';
+  };
+  ffRecognition.start();
+}
+</script>
+<!-- ══ END F&F CHAT BLOCK ══ -->
 </body>
 </html>

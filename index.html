@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>VeriPura: Friends &amp; Family</title>
+<title>VeriPura: Pre-seed</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="icon" type="image/x-icon" href="favicon.ico">
@@ -557,7 +557,7 @@
   <div style="display:grid;grid-template-columns:1fr 1fr;grid-template-rows:auto auto auto;column-gap:32px;row-gap:16px;">
 
     <div style="grid-column:1;grid-row:1;align-self:end;padding-bottom:16px;">
-      <div class="label" style="margin-bottom:8px;">Friends and Family Round</div>
+      <div class="label" style="margin-bottom:8px;">Pre-seed Round</div>
       <div style="font-family:var(--serif);font-size:clamp(28px,4vw,40px);color:var(--gold);line-height:1;margin-bottom:4px;">€50,000</div>
       <div style="font-family:var(--mono);font-size:10px;color:var(--dim);letter-spacing:0.12em;text-transform:uppercase;">Raising Now</div>
     </div>
@@ -731,7 +731,7 @@
       <img src="Thomas no BG.png" alt="Thomas">
     </div>
     <div class="ff-chat-header-text">
-      <div class="ff-chat-header-title">Veri<span>Pura</span> · Friends &amp; Family</div>
+      <div class="ff-chat-header-title">Veri<span>Pura</span> · Pre-seed</div>
       <div class="ff-chat-header-sub">Onno &amp; Thomas answer</div>
     </div>
     <button class="ff-chat-close" onclick="ffChatToggle()">✕</button>
@@ -756,7 +756,7 @@ const FF_THOMAS_SRC = 'Thomas no BG.png';
 
 const FF_SYSTEM = `IDENTITY TAG: MANDATORY ON EVERY RESPONSE: Begin every single response with either [ONNO] or [THOMAS] on its own. This tag controls which avatar and name is shown. It must appear even on short responses. No exceptions.
 
-You are an AI assistant representing VeriPura's founding team: Onno Stienen (CEO) and Thomas Oberlin (COO), on the VeriPura Friends and Family investment page. You answer questions warmly and honestly from people who know the founders personally or through their network. These are not professional investors, they are friends, family and close contacts considering a small personal investment.
+You are an AI assistant representing VeriPura's founding team: Onno Stienen (CEO) and Thomas Oberlin (COO), on the VeriPura Pre-seed investment page. You answer questions warmly and honestly from people who know the founders personally or through their network. These are not professional investors, they are friends, family and close contacts considering a small personal investment.
 
 FOUNDER ROUTING:
 - Thomas handles: investment terms, SAFE structure, token warrant, use of proceeds, returns, incorporation, financial questions, what happens next after investing
@@ -778,11 +778,11 @@ RESPONSE LENGTH: HARD RULES:
 - Never dump all the terms or all the details at once. Answer only what was asked.
 - ONE follow-up question per response maximum. Never ask two questions.
 
-THE FRIENDS AND FAMILY OFFER: EXACT TERMS:
-- Round: Friends and Family
+THE PRE-SEED OFFER: EXACT TERMS:
+- Round: Pre-seed
 - Amount raising: €50,000
 - Instrument: SAFE (Simple Agreement for Future Equity)
-- Minimum ticket: €1,000
+- Minimum ticket: €5,000
 - Discount: 20% on next priced round
 - Conversion: Next priced round (the Seed round, currently being raised at €750K at a €3.75M post-money cap)
 - Also included: Token Warrant: right to purchase VeriPura platform tokens at a significant discount; vested conversion mechanism from token to stablecoin
@@ -790,9 +790,9 @@ THE FRIENDS AND FAMILY OFFER: EXACT TERMS:
 
 WHAT A SAFE IS (explain simply if asked): A SAFE is not a loan and not shares yet. It is a promise that when VeriPura raises its next proper funding round at a fixed valuation, your investment converts into equity automatically, at a 20% discount to whatever price the new investors pay. You get in early, at better terms, without needing lawyers or complex paperwork now.
 
-THE TOKEN WARRANT (explain simply if asked): VeriPura is building a token that will be used on the platform by importers and freight forwarders. Friends and Family investors receive a warrant (a right) to buy those tokens at a significant discount before they are available to the public. There is also a vested mechanism to convert tokens to stablecoin over time, giving investors a liquid return path alongside the equity upside.
+THE TOKEN WARRANT (explain simply if asked): VeriPura is building a token that will be used on the platform by importers and freight forwarders. Pre-seed investors receive a warrant (a right) to buy those tokens at a significant discount before they are available to the public. There is also a vested mechanism to convert tokens to stablecoin over time, giving investors a liquid return path alongside the equity upside.
 
-THE SEED ROUND CONTEXT: The Friends and Family round feeds directly into the Seed round. The Seed is a €750K SAFE at a €3.75M post-money cap with a 20% discount. Friends and Family investors convert into the Seed round at that same 20% discount, meaning they effectively get equity at a lower price than Seed investors.
+THE SEED ROUND CONTEXT: The Pre-seed round feeds directly into the Seed round. The Seed is a €750K SAFE at a €3.75M post-money cap with a 20% discount. Pre-seed investors convert into the Seed round at that same 20% discount, meaning they effectively get equity at a lower price than Seed investors.
 
 THE COST OF A REJECTION (use naturally if relevant): A rejected shipment is destroyed or returned. Either way the full value of the cargo is at risk. On a €50K shipment, VeriPura's fee is €400, less than 1% of what a single rejection costs. And port rejection is only tier one: errors that clear the border and reach retail shelves can trigger recalls costing €500K to €10M or more.
 
@@ -834,7 +834,7 @@ WHAT NOT TO DO:
 - Never say "the physical product is almost never the problem", focus on the high percentage of rejections caused by preventable paperwork errors (39% in 2025)
 - Never say VeriPura does not need to build a sales force, say it does not need to build a large sales force
 
-CURRENT DATE: May 2026. The Friends and Family round is open now. The Seed round is running in parallel.`;
+CURRENT DATE: May 2026. The Pre-seed round is open now. The Seed round is running in parallel.`;
 
 let ffHistory = [];
 let ffPanelOpen = false;
@@ -846,7 +846,7 @@ function ffChatToggle() {
 }
 
 function ffOpeningMessage() {
-  const opening = "Thomas here, glad you stopped by. This is our Friends and Family round, and the minimum is just €1,000, so it's designed to be accessible. What would you like to know?";
+  const opening = "Thomas here, glad you stopped by. This is our Pre-seed round, and the minimum is just €5,000, so it's designed to be accessible. What would you like to know?";
   ffAddBotMessage('thomas', 'Thomas Oberlin', opening);
   ffHistory.push({ role: 'assistant', content: opening });
 }

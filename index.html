@@ -3,11 +3,12 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>VeriPura: Pre-seed</title>
+<title>VeriPura — Friends &amp; Family</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="icon" type="image/x-icon" href="favicon.ico">
 <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
+<!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-K1FV9D1PHS"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
@@ -35,142 +36,626 @@
     --mono:  'DM Mono', 'Courier New', monospace;
   }
 
-  html, body { height: 100%; background: #060f1c; font-family: var(--sans); color: #fff; }
+  html, body {
+    height: 100%;
+    background: #060f1c;
+    font-family: var(--sans);
+    color: #fff;
+  }
 
   .slide {
-    display: none; width: 100%; min-height: 100vh;
-    padding: 72px 80px 96px; flex-direction: column;
-    justify-content: center; background: var(--navy); position: relative;
+    display: none;
+    width: 100%;
+    min-height: 100vh;
+    padding: 72px 80px 96px;
+    flex-direction: column;
+    justify-content: center;
+    background: var(--navy);
+    position: relative;
   }
   .slide.active { display: flex; }
-  .slide.dark { background: var(--ink); }
+  .slide.dark    { background: var(--ink); }
 
   .logo {
-    position: absolute; top: 32px; left: 80px;
-    font-family: var(--serif); font-size: 22px; color: #fff;
-    display: flex; align-items: center; gap: 7px;
+    position: absolute;
+    top: 32px; left: 80px;
+    font-family: var(--serif);
+    font-size: 22px;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    gap: 7px;
   }
-  .logo img { height: 18px; width: auto; }
+  .logo img {
+    height: 18px;
+    width: auto;
+  }
 
   .slide-tag {
-    position: absolute; top: 36px; right: 80px;
-    font-family: var(--mono); font-size: 10px; color: var(--dim);
-    letter-spacing: 0.15em; text-transform: uppercase;
+    position: absolute;
+    top: 36px; right: 80px;
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--dim);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
   }
 
   .label {
-    font-family: var(--mono); font-size: 10px; color: var(--gold);
-    letter-spacing: 0.22em; text-transform: uppercase; margin-bottom: 20px;
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--gold);
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    margin-bottom: 20px;
   }
 
   .big {
-    font-family: var(--serif); font-size: clamp(28px, 3.4vw, 46px);
-    line-height: 1.22; color: #fff; max-width: 860px;
+    font-family: var(--serif);
+    font-size: clamp(28px, 3.4vw, 46px);
+    line-height: 1.22;
+    color: #fff;
+    max-width: 860px;
   }
-  .big em { color: var(--gold); font-style: normal; }
+
+  .big em {
+    color: var(--gold);
+    font-style: normal;
+  }
 
   .rule {
-    width: 60px; height: 3px; background: var(--gold);
-    margin: 28px 0; border-radius: 2px; flex-shrink: 0;
+    width: 60px;
+    height: 3px;
+    background: var(--gold);
+    margin: 28px 0;
+    border-radius: 2px;
+    flex-shrink: 0;
   }
 
+  /* ── Stat row ── */
+  .stat-row {
+    display: flex;
+    align-items: stretch;
+    gap: 0;
+    margin-top: 32px;
+    max-width: 700px;
+    background: var(--deep);
+    border: 1px solid var(--bord);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+
+  .stat-block {
+    flex: 1;
+    padding: 22px 28px 18px;
+    border-right: 1px solid var(--bord);
+  }
+  .stat-block:last-child { border-right: none; }
+
+  .stat-num {
+    font-family: var(--serif);
+    font-size: clamp(32px, 4vw, 48px);
+    color: var(--gold);
+    line-height: 1;
+    margin-bottom: 6px;
+  }
+
+  .stat-label {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--dim);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    line-height: 1.4;
+  }
+
+  /* ── Narrative text ── */
+  .narrative {
+    font-size: 16px;
+    line-height: 1.7;
+    color: var(--sky);
+    max-width: 780px;
+    margin-top: 24px;
+  }
+
+  .narrative strong { color: #fff; }
+
+  /* ── Trade flow diagram ── */
+  .trade-flow {
+    display: flex;
+    align-items: stretch;
+    gap: 0;
+    margin-top: 28px;
+    border: 1px solid var(--bord);
+    border-radius: 8px;
+    overflow: hidden;
+    max-width: 860px;
+  }
+
+  .tf-node {
+    flex: 1;
+    padding: 18px 20px 16px;
+    background: var(--deep);
+    border-right: 1px solid var(--bord);
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .tf-node:last-child { border-right: none; }
+  .tf-node.vp {
+    background: #0d2038;
+    border-right-color: var(--bord);
+  }
+  .tf-node.ok {
+    background: rgba(46,139,87,0.08);
+  }
+
+  .tf-country {
+    font-family: var(--mono);
+    font-size: 9.5px;
+    color: var(--dim);
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+  }
+
+  .tf-title {
+    font-family: var(--serif);
+    font-size: 15px;
+    color: #fff;
+    margin-bottom: 2px;
+  }
+
+  .doc-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    margin-top: 4px;
+  }
+
+  .doc-tag {
+    font-family: var(--mono);
+    font-size: 9px;
+    color: var(--pale);
+    background: var(--card);
+    border: 1px solid var(--bord);
+    border-radius: 3px;
+    padding: 3px 8px;
+    white-space: nowrap;
+  }
+
+  .doc-tag.more {
+    color: var(--dim);
+    border-style: dashed;
+  }
+
+  .tf-arrow {
+    width: 36px;
+    flex-shrink: 0;
+    background: var(--deep);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    border-right: 1px solid var(--bord);
+  }
+
+  .tf-arrow-icon {
+    color: var(--gold);
+    font-size: 16px;
+  }
+
+  .tf-arrow-label {
+    font-family: var(--mono);
+    font-size: 8px;
+    color: var(--dim);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    writing-mode: vertical-rl;
+    transform: rotate(180deg);
+  }
+
+  .agent-check {
+    font-size: 12px;
+    color: var(--pale);
+    display: flex;
+    align-items: center;
+    gap: 7px;
+  }
+
+  .agent-check span {
+    color: var(--gold);
+    font-size: 11px;
+    font-weight: bold;
+  }
+
+  .iota-hash {
+    font-family: var(--mono);
+    font-size: 9px;
+    color: var(--dim);
+    margin-top: 4px;
+    padding: 5px 8px;
+    background: var(--card);
+    border-radius: 3px;
+    border: 1px solid var(--bord);
+  }
+
+  .cleared-badge {
+    display: inline-block;
+    background: rgba(46,139,87,0.2);
+    border: 1px solid #2E8B57;
+    border-radius: 4px;
+    padding: 6px 12px;
+    font-family: var(--mono);
+    font-size: 10px;
+    color: #5ec98a;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-top: 4px;
+  }
+
+  /* ── Solution pillars ── */
   .pillars {
-    display: grid; grid-template-columns: repeat(3, 1fr);
-    gap: 14px; margin-top: 28px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+    margin-top: 28px;
+    max-width: 100%;
   }
+
   .pillar {
-    background: var(--card); border: 1px solid var(--bord);
-    border-radius: 6px; padding: 16px 18px 14px;
-    position: relative; overflow: hidden;
+    background: var(--card);
+    border: 1px solid var(--bord);
+    border-radius: 6px;
+    padding: 16px 18px 14px;
+    position: relative;
+    overflow: hidden;
   }
+
   .pillar::before {
-    content: ''; position: absolute; top: 0; left: 0; right: 0;
-    height: 3px; background: var(--gold);
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: var(--gold);
   }
-  .pillar-title { font-family: var(--serif); font-size: 15px; color: #fff; margin-bottom: 6px; margin-top: 2px; }
-  .pillar-body { font-size: 12.5px; color: var(--pale); line-height: 1.55; }
 
-  .team-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-top: 28px; max-width: 900px; }
+  .pillar-title {
+    font-family: var(--serif);
+    font-size: 15px;
+    color: #fff;
+    margin-bottom: 6px;
+    margin-top: 2px;
+  }
+
+  .pillar-body {
+    font-size: 12.5px;
+    color: var(--pale);
+    line-height: 1.55;
+  }
+
+  /* ── Team ── */
+  .team-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    margin-top: 28px;
+    max-width: 900px;
+  }
+
   .team-card {
-    background: var(--card); border: 1px solid var(--bord);
-    border-radius: 6px; padding: 22px 20px 18px; position: relative; overflow: hidden;
+    background: var(--card);
+    border: 1px solid var(--bord);
+    border-radius: 6px;
+    padding: 22px 20px 18px;
+    position: relative;
+    overflow: hidden;
   }
-  .team-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: var(--gold); }
-  .team-photo { width: 72px; height: 72px; border-radius: 50%; object-fit: cover; border: 2px solid var(--gold); margin-bottom: 12px; margin-top: 4px; display: block; }
-  .linkedin-link { display: inline-flex; align-items: center; gap: 6px; margin-top: 12px; color: var(--dim); font-size: 11px; font-family: var(--mono); text-decoration: none; transition: color 0.15s; }
+
+  .team-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: var(--gold);
+  }
+
+  .team-photo {
+    width: 72px; height: 72px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid var(--gold);
+    margin-bottom: 12px;
+    margin-top: 4px;
+    display: block;
+  }
+
+  .linkedin-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 12px;
+    color: var(--dim);
+    font-size: 11px;
+    font-family: var(--mono);
+    text-decoration: none;
+    transition: color 0.15s;
+  }
   .linkedin-link:hover { color: var(--gold); }
-  .team-name { font-family: var(--serif); font-size: 18px; color: #fff; margin-bottom: 4px; margin-top: 4px; }
-  .team-role { font-family: var(--mono); font-size: 9px; color: var(--gold); letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 14px; }
-  .team-bio { font-size: 13px; line-height: 1.6; color: var(--pale); }
 
-  .pills { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 24px; max-width: 900px; }
-  .pill {
-    background: var(--deep); border: 1px solid var(--gold);
-    border-radius: 40px; padding: 8px 18px; font-size: 13px;
-    color: var(--pale); display: flex; align-items: center; gap: 9px;
+  .team-name {
+    font-family: var(--serif);
+    font-size: 18px;
+    color: #fff;
+    margin-bottom: 4px;
+    margin-top: 4px;
   }
-  .pill-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--gold); flex-shrink: 0; }
 
-  .cta-row { display: flex; flex-wrap: wrap; gap: 16px; align-items: center; }
+  .team-role {
+    font-family: var(--mono);
+    font-size: 9px;
+    color: var(--gold);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 14px;
+  }
+
+  .team-bio {
+    font-size: 13px;
+    line-height: 1.6;
+    color: var(--pale);
+  }
+
+  /* ── Validation pills ── */
+  .pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 24px;
+    max-width: 900px;
+  }
+
+  .pill {
+    background: var(--deep);
+    border: 1px solid var(--gold);
+    border-radius: 40px;
+    padding: 8px 18px;
+    font-size: 13px;
+    color: var(--pale);
+    display: flex;
+    align-items: center;
+    gap: 9px;
+  }
+
+  .pill-dot {
+    width: 7px; height: 7px;
+    border-radius: 50%;
+    background: var(--gold);
+    flex-shrink: 0;
+  }
+
+  /* ── Ask ── */
+  .raise-row {
+    display: flex;
+    align-items: flex-end;
+    gap: 48px;
+    margin-bottom: 28px;
+    flex-wrap: wrap;
+  }
+
+  .raise-block {}
+
+  .raise-amount {
+    font-family: var(--serif);
+    font-size: clamp(56px, 9vw, 88px);
+    color: var(--gold);
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+
+  .raise-amount.secondary {
+    font-size: clamp(36px, 5.5vw, 56px);
+    color: #fff;
+  }
+
+  .raise-label {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--dim);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+  }
+
+  .raise-div {
+    width: 1px;
+    height: 72px;
+    background: var(--bord);
+    flex-shrink: 0;
+  }
+
+  .offer-cards {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    max-width: 520px;
+    margin-bottom: 12px;
+  }
+
+  .offer-card {
+    background: var(--card);
+    border: 1px solid var(--bord);
+    border-radius: 6px;
+    padding: 16px 18px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .offer-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: var(--gold);
+  }
+
+  .offer-card-tag {
+    font-family: var(--mono);
+    font-size: 9px;
+    color: var(--gold);
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+    margin-top: 4px;
+  }
+
+  .offer-card-title {
+    font-family: var(--serif);
+    font-size: 18px;
+    color: #fff;
+    margin-bottom: 6px;
+  }
+
+  .offer-card-body {
+    font-size: 12.5px;
+    color: var(--pale);
+    line-height: 1.5;
+  }
+
+  .proceeds {
+    background: var(--deep);
+    border: 1px solid var(--bord);
+    border-radius: 6px;
+    padding: 16px 20px;
+    max-width: 520px;
+    margin-bottom: 28px;
+  }
+
+  .proceeds-label {
+    font-family: var(--mono);
+    font-size: 9px;
+    color: var(--gold);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+
+  .proceeds-item {
+    font-size: 13.5px;
+    color: var(--pale);
+    line-height: 1.7;
+  }
+
+  .token-note {
+    max-width: 520px;
+    font-size: 11.5px;
+    color: var(--dim);
+    font-family: var(--mono);
+    margin-bottom: 20px;
+    line-height: 1.6;
+  }
+
+  /* ── CTA ── */
+  .cta-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    align-items: center;
+  }
+
   .btn-primary {
-    display: inline-block; background: var(--gold); color: var(--navy);
-    font-family: var(--sans); font-size: 15px; font-weight: 700;
-    padding: 14px 34px; border-radius: 4px; text-decoration: none;
+    display: inline-block;
+    background: var(--gold);
+    color: var(--navy);
+    font-family: var(--sans);
+    font-size: 15px;
+    font-weight: 700;
+    padding: 14px 34px;
+    border-radius: 4px;
+    text-decoration: none;
     transition: transform 0.15s, box-shadow 0.15s;
   }
-  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(212,168,71,0.3); }
-  .btn-secondary {
-    display: inline-block; border: 1.5px solid var(--gold); color: var(--gold);
-    font-family: var(--sans); font-size: 15px; font-weight: 500;
-    padding: 13px 34px; border-radius: 4px; text-decoration: none; transition: background 0.15s;
-  }
-  .btn-secondary:hover { background: rgba(212,168,71,0.1); }
-  .contact-note { font-size: 12px; color: var(--dim); margin-top: 16px; font-family: var(--mono); }
 
+  .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(212,168,71,0.3);
+  }
+
+  .btn-secondary {
+    display: inline-block;
+    border: 1.5px solid var(--gold);
+    color: var(--gold);
+    font-family: var(--sans);
+    font-size: 15px;
+    font-weight: 500;
+    padding: 13px 34px;
+    border-radius: 4px;
+    text-decoration: none;
+    transition: background 0.15s;
+  }
+
+  .btn-secondary:hover {
+    background: rgba(212,168,71,0.1);
+  }
+
+  .contact-note {
+    font-size: 12px;
+    color: var(--dim);
+    margin-top: 16px;
+    font-family: var(--mono);
+  }
+
+  /* ── Nav ── */
   .nav {
-    position: fixed; bottom: 32px; right: 48px;
-    display: flex; gap: 12px; z-index: 100;
+    position: fixed;
+    bottom: 32px; right: 48px;
+    display: flex;
+    gap: 12px;
+    z-index: 100;
   }
+
   .nav-btn {
-    width: 44px; height: 44px; border: 1.5px solid var(--gold);
-    border-radius: 50%; display: flex; align-items: center; justify-content: center;
-    cursor: pointer; color: var(--gold); font-size: 17px;
-    background: rgba(10,25,40,0.7); backdrop-filter: blur(6px);
-    transition: background 0.2s, transform 0.15s; user-select: none;
+    width: 44px; height: 44px;
+    border: 1.5px solid var(--gold);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer;
+    color: var(--gold);
+    font-size: 17px;
+    background: rgba(10,25,40,0.7);
+    backdrop-filter: blur(6px);
+    transition: background 0.2s, transform 0.15s;
+    user-select: none;
   }
-  .nav-btn:hover { background: rgba(212,168,71,0.15); transform: scale(1.08); }
-  .nav-btn.off { opacity: 0.2; pointer-events: none; }
+
+  .nav-btn:hover  { background: rgba(212,168,71,0.15); transform: scale(1.08); }
+  .nav-btn.off    { opacity: 0.2; pointer-events: none; }
 
   .counter {
-    position: fixed; bottom: 10px; right: 48px;
-    font-family: var(--mono); font-size: 11px; color: var(--dim); text-align: right;
+    position: fixed;
+    bottom: 10px; right: 48px;
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--dim);
+    text-align: right;
   }
 
   .foot {
-    position: absolute; bottom: 0; left: 0; right: 0;
-    background: var(--deep); padding: 9px 80px;
-    font-family: var(--mono); font-size: 9px; color: var(--dim); letter-spacing: 0.12em;
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    background: var(--deep);
+    padding: 9px 80px;
+    font-family: var(--mono);
+    font-size: 9px;
+    color: var(--dim);
+    letter-spacing: 0.12em;
   }
-
-  /* COST HIERARCHY */
-  .hier-row { display: grid; grid-template-columns: repeat(3,1fr); gap: 12px; margin-top: 20px; }
-  .hier-card {
-    background: var(--deep); border: 1px solid var(--bord);
-    border-radius: 6px; padding: 18px 16px;
-  }
-  .hier-card.t3 { border-color: rgba(192,48,32,0.4); }
-  .hier-lbl { font-family: var(--mono); font-size: 9px; text-transform: uppercase; letter-spacing: 0.12em; color: var(--dim); margin-bottom: 5px; }
-  .hier-name { font-family: var(--serif); font-size: 15px; color: #fff; margin-bottom: 5px; }
-  .hier-cost { font-family: var(--serif); font-size: 22px; margin-bottom: 6px; }
-  .t1 .hier-cost { color: #F0A050; }
-  .t2 .hier-cost { color: #E05A30; }
-  .t3 .hier-cost { color: #C03020; }
-  .hier-desc { font-size: 11px; color: var(--dim); line-height: 1.5; }
 </style>
 </head>
 <body>
 
-<!-- ════ 1. THE PROBLEM ════ -->
+<!-- ════════════════════════════════
+     1. THE PROBLEM
+════════════════════════════════ -->
 <div class="slide dark active" data-slide="1">
   <div class="logo"><img src="checkmark_gold.png" alt="">VeriPura</div>
   <div class="slide-tag">The Problem</div>
@@ -178,11 +663,13 @@
   <div class="label">The Reality of Global Food Trade</div>
 
   <h1 class="big" style="font-size:clamp(26px,3vw,40px);">
-    Last year, <em>12,486 times,</em> food shipments sent to the USA were <em style="letter-spacing:0.08em;">REJECTED</em> at the port of entry.
+    Last year, <em>12,486 times,</em> food shipments sent to the USA<br>
+    were <em style="letter-spacing:0.08em;">REJECTED</em> at the port of entry.
   </h1>
 
   <div style="display:grid;grid-template-columns:240px 1fr;gap:24px;margin-top:24px;align-items:start;">
 
+    <!-- Stats -->
     <div style="display:flex;flex-direction:column;gap:0;border:1px solid var(--bord);border-radius:8px;overflow:hidden;">
       <div style="background:var(--deep);padding:15px 20px;border-bottom:1px solid var(--bord);">
         <div style="font-family:var(--serif);font-size:36px;color:var(--gold);line-height:1;margin-bottom:4px;">12,486</div>
@@ -190,36 +677,37 @@
       </div>
       <div style="background:var(--deep);padding:15px 20px;border-bottom:1px solid var(--bord);">
         <div style="font-family:var(--serif);font-size:36px;color:var(--gold);line-height:1;margin-bottom:4px;">39%</div>
-        <div style="font-family:var(--mono);font-size:9px;color:var(--dim);letter-spacing:0.12em;text-transform:uppercase;">Preventable paperwork errors</div>
+        <div style="font-family:var(--mono);font-size:9px;color:var(--dim);letter-spacing:0.12em;text-transform:uppercase;">Paperwork errors</div>
       </div>
       <div style="background:var(--deep);padding:15px 20px;border-bottom:1px solid var(--bord);">
         <div style="font-family:var(--serif);font-size:36px;color:var(--gold);line-height:1;margin-bottom:4px;">30+</div>
         <div style="font-family:var(--mono);font-size:9px;color:var(--dim);letter-spacing:0.12em;text-transform:uppercase;">Documents per shipment</div>
       </div>
       <div style="background:var(--deep);padding:15px 20px;">
-        <div style="font-family:var(--serif);font-size:36px;color:var(--gold);line-height:1;margin-bottom:4px;">100%</div>
-        <div style="font-family:var(--mono);font-size:9px;color:var(--dim);letter-spacing:0.12em;text-transform:uppercase;">Of shipment value at risk on rejection</div>
+        <div style="font-family:var(--serif);font-size:36px;color:var(--gold);line-height:1;margin-bottom:4px;">€100K</div>
+        <div style="font-family:var(--mono);font-size:9px;color:var(--dim);letter-spacing:0.12em;text-transform:uppercase;">Cost per rejection</div>
       </div>
     </div>
 
+    <!-- Story points -->
     <div style="display:flex;flex-direction:column;border:1px solid var(--bord);border-radius:8px;overflow:hidden;height:100%;">
       <div style="flex:1;display:flex;padding:0 24px;background:var(--deep);border-bottom:1px solid var(--bord);align-items:center;">
-        <div style="font-size:15px;color:var(--pale);line-height:1.5;">39% were preventable paperwork errors. <strong style="color:#fff;">Avoidable. Caught too late.</strong></div>
+        <div style="font-size:15px;color:var(--pale);line-height:1.5;">39% were paperwork errors. <strong style="color:#fff;">Avoidable. Caught too late.</strong></div>
       </div>
       <div style="flex:1;display:flex;padding:0 24px;background:var(--deep);border-bottom:1px solid var(--bord);align-items:center;">
-        <div style="font-size:15px;color:var(--pale);line-height:1.5;">A rejected shipment is <strong style="color:#fff;">a total loss for the importer.</strong></div>
+        <div style="font-size:15px;color:var(--pale);line-height:1.5;">Behind every rejection: <strong style="color:#fff;">dozens of hours spent on hundreds of thousands more shipments</strong> just to prevent the same outcome.</div>
       </div>
       <div style="flex:1;display:flex;padding:0 24px;background:var(--deep);border-bottom:1px solid var(--bord);align-items:center;">
-        <div style="font-size:15px;color:var(--pale);line-height:1.5;"><strong style="color:#fff;">30+ documents</strong> per shipment across multiple languages and shifting regulations.</div>
+        <div style="font-size:15px;color:var(--pale);line-height:1.5;"><strong style="color:#fff;">30+ documents</strong> per shipment. Low-trust origins. Multiple languages. Regulations that shift by trade route.</div>
       </div>
       <div style="flex:1;display:flex;padding:0 24px;background:var(--deep);border-bottom:1px solid var(--bord);align-items:center;">
-        <div style="font-size:15px;color:var(--pale);line-height:1.5;">The compliance burden is heaviest on trade corridors from <strong style="color:#fff;">APAC, ASEAN, and Latin America into the US, EU+, and UK.</strong></div>
+        <div style="font-size:15px;color:var(--pale);line-height:1.5;">European importers face <strong style="color:#fff;">a problem of comparable scale.</strong></div>
       </div>
       <div style="flex:1;display:flex;padding:0 24px;background:var(--deep);border-bottom:1px solid var(--bord);align-items:center;">
-        <div style="font-size:15px;color:var(--pale);line-height:1.5;">Food is only the start. <strong style="color:#fff;">Vitamins, supplements, cosmetics, and pharmaceuticals</strong> carry the same burden.</div>
+        <div style="font-size:15px;color:var(--pale);line-height:1.5;">Food is only the start. <strong style="color:#fff;">Vitamins, supplements, cosmetics, pharmaceuticals</strong> carry the same burden.</div>
       </div>
       <div style="flex:1;display:flex;padding:0 24px;background:var(--deep);align-items:center;">
-        <div style="font-size:15px;color:var(--pale);line-height:1.5;">Today, most compliance requires <strong style="color:#fff;">extensive manual review,</strong> managed over WhatsApp and email with no consolidated audit trail.</div>
+        <div style="font-size:15px;color:var(--pale);line-height:1.5;">Today, most of this is managed over <strong style="color:#fff;">WhatsApp and email.</strong> No consolidated audit trail. No accountability.</div>
       </div>
     </div>
 
@@ -229,127 +717,75 @@
 </div>
 
 
-<!-- ════ 2. THE COST OF GETTING IT WRONG ════ -->
-<div class="slide dark" data-slide="2">
-  <div class="logo"><img src="checkmark_gold.png" alt="">VeriPura</div>
-  <div class="slide-tag">The Cost</div>
-
-  <div class="label">What a Rejection Actually Costs</div>
-
-  <h1 class="big" style="font-size:clamp(24px,2.8vw,38px);">
-    A port rejection is survivable.<br>
-    <em>A recall from the supermarket shelf is not.</em>
-  </h1>
-
-  <div class="hier-row" style="margin-top:24px;">
-    <div class="hier-card t1">
-      <div class="hier-lbl">Tier 1</div>
-      <div class="hier-name">Port Rejection</div>
-      <div class="hier-cost">Shipment lost</div>
-      <div class="hier-desc">Destroyed or returned at the importer's cost. The full value of the cargo is at risk. Detention fees accumulate daily while it is resolved.</div>
-    </div>
-    <div class="hier-card t2">
-      <div class="hier-lbl">Tier 2</div>
-      <div class="hier-name">Market Withdrawal</div>
-      <div class="hier-cost">Multiples of cargo value</div>
-      <div class="hier-desc">Product recalled from distribution networks before reaching shelves. Logistics, storage and disposal costs stack on top of the cargo loss.</div>
-    </div>
-    <div class="hier-card t3">
-      <div class="hier-lbl">Tier 3</div>
-      <div class="hier-name">Retail Recall</div>
-      <div class="hier-cost">€500K-€10M+</div>
-      <div class="hier-desc">Product pulled from supermarket shelves. Retailer penalties, legal liability, brand destruction. Often existential for smaller importers.</div>
-    </div>
-  </div>
-
-  <div style="margin-top:24px;background:var(--card);border:1px solid var(--bord);border-radius:6px;padding:18px 24px;max-width:860px;position:relative;overflow:hidden;">
-    <div style="position:absolute;top:0;left:0;right:0;height:3px;background:var(--gold);"></div>
-    <div style="font-size:15px;color:var(--pale);line-height:1.7;">
-      A documentation error that clears the port undetected does not disappear. It travels with the product into distribution, onto the shelf, and into the consumer's hands. <strong style="color:#fff;">VeriPura catches it before the shipment moves.</strong> That is the only point where all three tiers of document-related risk are eliminated simultaneously.
-    </div>
-  </div>
-
-  <div style="margin-top:20px;display:flex;align-items:center;gap:16px;flex-wrap:wrap;">
-    <div style="background:var(--deep);border:1px solid var(--bord);border-radius:6px;padding:14px 20px;display:flex;gap:20px;align-items:center;">
-      <div>
-        <div style="font-family:var(--serif);font-size:28px;color:var(--gold);line-height:1;margin-bottom:2px;">€400</div>
-        <div style="font-family:var(--mono);font-size:9px;color:var(--dim);letter-spacing:0.1em;text-transform:uppercase;">VeriPura fee on a €50K shipment</div>
-      </div>
-      <div style="font-size:22px;color:var(--bord);">vs</div>
-      <div>
-        <div style="font-family:var(--serif);font-size:28px;color:#C03020;line-height:1;margin-bottom:2px;">€50,000+</div>
-        <div style="font-family:var(--mono);font-size:9px;color:var(--dim);letter-spacing:0.1em;text-transform:uppercase;">Shipment value lost on rejection</div>
-      </div>
-    </div>
-    <div style="font-size:14px;color:var(--sky);max-width:340px;line-height:1.6;">Less than 1% of what a single rejection costs. <strong style="color:#fff;">Not a compliance overhead. Risk protection priced at a fraction of the risk.</strong></div>
-  </div>
-
-  <div class="foot"><a href="http://www.veripura.com" target="_blank" style="color:inherit;text-decoration:none;">www.veripura.com</a> &nbsp;·&nbsp; Confidential</div>
-</div>
-
-
-<!-- ════ 3. THE SOLUTION ════ -->
-<div class="slide" data-slide="3">
+<!-- ════════════════════════════════
+     2. THE SOLUTION
+════════════════════════════════ -->
+<div class="slide" data-slide="2">
   <div class="logo"><img src="checkmark_gold.png" alt="">VeriPura</div>
   <div class="slide-tag">The Solution</div>
 
   <div class="label">How VeriPura Works</div>
 
   <h1 class="big">
-    Compliance document validation<br>powered by <em>orchestrated AI-Agents,</em><br>with blockchain attestation.
+    From purchase order to blockchain attestation.<br>
+    <em>VeriPura orchestrates every step.</em>
   </h1>
 
+  <!-- 6-step workflow -->
   <div style="display:grid;grid-template-columns:repeat(6,1fr);gap:0;border:1px solid var(--bord);border-radius:8px;overflow:hidden;margin-top:24px;">
 
+    <!-- Step 1: Importer issues PO -->
     <div style="background:var(--deep);padding:14px 14px 12px;border-right:1px solid var(--bord);position:relative;">
       <div style="font-family:var(--mono);font-size:9px;color:var(--dim);letter-spacing:0.12em;margin-bottom:8px;">STEP 01</div>
       <div style="font-family:var(--serif);font-size:13px;color:#fff;margin-bottom:6px;">PO Issued</div>
       <div style="font-size:11px;color:var(--pale);line-height:1.5;">Importer issues purchase order</div>
     </div>
 
+    <!-- Step 2: VeriPura identifies docs -->
     <div style="background:var(--card);padding:14px 14px 12px;border-right:1px solid var(--bord);position:relative;overflow:hidden;">
       <div style="position:absolute;top:0;left:0;right:0;height:3px;background:var(--gold);"></div>
       <div style="font-family:var(--mono);font-size:9px;color:var(--gold);letter-spacing:0.12em;margin-bottom:8px;">VERIPURA</div>
       <div style="font-family:var(--serif);font-size:13px;color:#fff;margin-bottom:6px;">Docs Identified</div>
-      <div style="font-size:11px;color:var(--pale);line-height:1.5;">Required documents identified for this trade route <strong style="color:var(--gold);">before</strong> the shipment moves</div>
+      <div style="font-size:11px;color:var(--pale);line-height:1.5;">Required documents identified for this trade route</div>
     </div>
 
-    <div style="background:var(--deep);padding:14px 14px 12px;border-right:1px solid var(--bord);">
+    <!-- Step 3: Upload -->
+    <div style="background:var(--deep);padding:14px 14px 12px;border-right:1px solid var(--bord);position:relative;">
       <div style="font-family:var(--mono);font-size:9px;color:var(--dim);letter-spacing:0.12em;margin-bottom:8px;">STEP 03</div>
       <div style="font-family:var(--serif);font-size:13px;color:#fff;margin-bottom:6px;">Upload</div>
       <div style="font-size:11px;color:var(--pale);line-height:1.5;">Exporter and importer upload documents</div>
     </div>
 
+    <!-- Step 4: VeriPura validates -->
     <div style="background:var(--card);padding:14px 14px 12px;border-right:1px solid var(--bord);position:relative;overflow:hidden;">
       <div style="position:absolute;top:0;left:0;right:0;height:3px;background:var(--gold);"></div>
       <div style="font-family:var(--mono);font-size:9px;color:var(--gold);letter-spacing:0.12em;margin-bottom:8px;">VERIPURA</div>
       <div style="font-family:var(--serif);font-size:13px;color:#fff;margin-bottom:6px;">Validate</div>
-      <div style="font-size:11px;color:var(--pale);line-height:1.5;">50+ orchestrated AI agents validate every document, flagging errors and omissions</div>
+      <div style="font-size:11px;color:var(--pale);line-height:1.5;">50+ agents flag errors and omissions</div>
     </div>
 
-    <div style="background:var(--deep);padding:14px 14px 12px;border-right:1px solid var(--bord);">
+    <!-- Step 5: Correct -->
+    <div style="background:var(--deep);padding:14px 14px 12px;border-right:1px solid var(--bord);position:relative;">
       <div style="font-family:var(--mono);font-size:9px;color:var(--dim);letter-spacing:0.12em;margin-bottom:8px;">STEP 05</div>
       <div style="font-family:var(--serif);font-size:13px;color:#fff;margin-bottom:6px;">Correct</div>
-      <div style="font-size:11px;color:var(--pale);line-height:1.5;">Errors flagged and corrected at source, weeks before the shipment reaches the border</div>
+      <div style="font-size:11px;color:var(--pale);line-height:1.5;">Parties resolve all issues before shipment moves</div>
     </div>
 
+    <!-- Step 6: VeriPura attests -->
     <div style="background:var(--card);padding:14px 14px 12px;position:relative;overflow:hidden;">
       <div style="position:absolute;top:0;left:0;right:0;height:3px;background:var(--gold);"></div>
       <div style="font-family:var(--mono);font-size:9px;color:var(--gold);letter-spacing:0.12em;margin-bottom:8px;">VERIPURA</div>
       <div style="font-family:var(--serif);font-size:13px;color:#fff;margin-bottom:6px;">Attest</div>
-      <div style="font-size:11px;color:var(--pale);line-height:1.5;">Each document hashed and committed on the IOTA blockchain</div>
+      <div style="font-size:11px;color:var(--pale);line-height:1.5;">Each document hashed and committed on-chain</div>
     </div>
 
   </div>
 
-  <div style="margin-top:14px;background:rgba(212,168,71,0.08);border:1px solid rgba(212,168,71,0.25);border-radius:6px;padding:12px 20px;max-width:860px;">
-    <div style="font-size:13px;color:var(--sky);line-height:1.6;"><strong style="color:var(--gold);">Key insight:</strong> VeriPura validates at the Purchase Order stage, weeks before the shipment reaches the border. Reducing compliance labor costs by an estimated 90%.</div>
-  </div>
-
-  <div class="pillars" style="margin-top:16px;">
+  <!-- Three pillars -->
+  <div class="pillars">
     <div class="pillar">
       <div class="pillar-title">Actionable Proof</div>
-      <p class="pillar-body">50+ orchestrated AI agents. Clear verdicts. Exporters fix issues before the shipment moves.</p>
+      <p class="pillar-body">50+ orchestrated agents. Clear verdicts. Exporters fix issues before the shipment moves.</p>
     </div>
     <div class="pillar">
       <div class="pillar-title">Source Validation</div>
@@ -357,7 +793,7 @@
     </div>
     <div class="pillar">
       <div class="pillar-title">Immutable Evidence</div>
-      <p class="pillar-body">Every document hashed. Committed on the IOTA blockchain. Tamper-proof. Globally auditable.</p>
+      <p class="pillar-body">Every document hashed. Stored on the IOTA blockchain. Tamper-proof. Globally auditable.</p>
     </div>
   </div>
 
@@ -365,58 +801,72 @@
 </div>
 
 
-<!-- ════ 4. GO TO MARKET ════ -->
-<div class="slide" data-slide="4">
+<!-- ════════════════════════════════
+     3. GO TO MARKET
+════════════════════════════════ -->
+<div class="slide" data-slide="3">
   <div class="logo"><img src="checkmark_gold.png" alt="">VeriPura</div>
   <div class="slide-tag">Go to Market</div>
 
   <div class="label">How We Reach the Market</div>
 
   <h1 class="big">
-    We do not need to build a large sales team.<br>
+    We are not building a sales team.<br>
     <em>We are plugging into one that already exists.</em>
   </h1>
 
-  <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:24px;">
+  <!-- Three GTM cards -->
+  <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:24px;max-width:100%;">
 
     <div style="background:var(--card);border:1px solid var(--bord);border-radius:6px;padding:20px 20px 18px;position:relative;overflow:hidden;">
       <div style="position:absolute;top:0;left:0;right:0;height:3px;background:var(--gold);"></div>
       <div style="font-family:var(--serif);font-size:16px;color:#fff;margin-bottom:10px;margin-top:4px;">The Channel</div>
-      <div style="font-size:13px;color:var(--pale);line-height:1.6;"><strong style="color:#fff;">Freight forwarders</strong> touch every shipment and earn a revenue share on every client they bring.<br>One signed forwarder partner unlocks hundreds of importers across multiple corridors simultaneously.</div>
+      <div style="font-size:13px;color:var(--pale);line-height:1.6;"><strong style="color:#fff;">Why freight forwarders?</strong> They touch every shipment.<br>They earn a revenue share on every client they bring.<br>Reduced delays, faster throughput, lower cost per transaction.</div>
     </div>
 
     <div style="background:var(--card);border:1px solid var(--bord);border-radius:6px;padding:20px 20px 18px;position:relative;overflow:hidden;">
       <div style="position:absolute;top:0;left:0;right:0;height:3px;background:var(--gold);"></div>
       <div style="font-family:var(--serif);font-size:16px;color:#fff;margin-bottom:10px;margin-top:4px;">The Flywheel</div>
-      <div style="font-size:13px;color:var(--pale);line-height:1.6;">Each forwarder relationship multiplies importer access.<br>Each document processed strengthens the AI.<br>The distribution network already exists.</div>
+      <div style="font-size:13px;color:var(--pale);line-height:1.6;">Hundreds of importers per typical forwarder.<br>One signed partner unlocks multiple corridors simultaneously.<br>Each relationship re-sells across geographies and sectors.</div>
     </div>
 
     <div style="background:var(--card);border:1px solid var(--bord);border-radius:6px;padding:20px 20px 18px;position:relative;overflow:hidden;">
       <div style="position:absolute;top:0;left:0;right:0;height:3px;background:var(--gold);"></div>
-      <div style="font-family:var(--serif);font-size:16px;color:#fff;margin-bottom:10px;margin-top:4px;">Sector Expansion</div>
-      <div style="font-size:13px;color:var(--pale);line-height:1.6;">Food today. Vitamins, cosmetics, and pharmaceuticals next.<br>Same partner relationship. Module upgrade only.<br>Re-sell cost is a fraction of original customer acquisition cost.</div>
+      <div style="font-family:var(--serif);font-size:16px;color:#fff;margin-bottom:10px;margin-top:4px;">The Moat</div>
+      <div style="font-size:13px;color:var(--pale);line-height:1.6;">Food today. Vitamins, cosmetics and pharmaceuticals after.<br>Same partner relationship. Module upgrade only.<br>Re-sell cost is a fraction of original CAC.</div>
     </div>
 
   </div>
 
-  <div style="margin-top:16px;background:var(--deep);border:1px solid var(--bord);border-radius:6px;padding:16px 20px;display:flex;align-items:center;gap:20px;max-width:100%;">
-    <div style="font-family:var(--serif);font-size:28px;color:var(--gold);flex-shrink:0;">01</div>
-    <div>
-      <div style="font-family:var(--serif);font-size:15px;color:#fff;margin-bottom:4px;">Per-Transaction Fee</div>
-      <div style="font-size:13px;color:var(--pale);">Starting at 0.8% of declared shipment value, with multipliers based on transaction complexity. The fee on a standard €50K shipment is €400. Less than 1% of what a single rejection costs.</div>
-    </div>
-  </div>
+  <!-- Revenue model -->
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:16px;max-width:100%;">
 
-  <div style="margin-top:12px;font-size:13px;color:var(--dim);max-width:860px;">
-    <strong style="color:var(--sky);">Priority corridors:</strong> APAC, ASEAN, and Latin America into the US, EU+, and UK. These corridors carry the highest rejection rates and represent the largest concentration of preventable compliance failures.
+    <div style="background:var(--deep);border:1px solid var(--bord);border-radius:6px;padding:16px 20px;display:flex;align-items:center;gap:20px;">
+      <div style="font-family:var(--serif);font-size:28px;color:var(--gold);flex-shrink:0;">01</div>
+      <div>
+        <div style="font-family:var(--serif);font-size:15px;color:#fff;margin-bottom:4px;">Monthly Subscription</div>
+        <div style="font-size:13px;color:var(--pale);">Scales with shipment volume.</div>
+      </div>
+    </div>
+
+    <div style="background:var(--deep);border:1px solid var(--bord);border-radius:6px;padding:16px 20px;display:flex;align-items:center;gap:20px;">
+      <div style="font-family:var(--serif);font-size:28px;color:var(--gold);flex-shrink:0;">02</div>
+      <div>
+        <div style="font-family:var(--serif);font-size:15px;color:#fff;margin-bottom:4px;">Per-Transaction Fee</div>
+        <div style="font-size:13px;color:var(--pale);">Priced by document complexity. Higher value for complex corridors.</div>
+      </div>
+    </div>
+
   </div>
 
   <div class="foot"><a href="http://www.veripura.com" target="_blank" style="color:inherit;text-decoration:none;">www.veripura.com</a> &nbsp;·&nbsp; Confidential</div>
 </div>
 
 
-<!-- ════ 5. MARKET AND PRICING ════ -->
-<div class="slide" data-slide="5">
+<!-- ════════════════════════════════
+     4. MARKET & PRICING
+════════════════════════════════ -->
+<div class="slide" data-slide="4">
   <div class="logo"><img src="checkmark_gold.png" alt="">VeriPura</div>
   <div class="slide-tag">Market and Pricing</div>
 
@@ -426,67 +876,94 @@
     €440B+ Global Food Import Market: EU, US and UK.<br><em>An accessible pricing model.</em>
   </h1>
 
+  <!-- TAM / SAM / SOM -->
   <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:0;border:1px solid var(--bord);border-radius:8px;overflow:hidden;margin-top:20px;">
 
     <div style="background:var(--deep);padding:20px 24px;border-right:1px solid var(--bord);">
       <div style="font-family:var(--mono);font-size:9px;color:var(--gold);letter-spacing:0.18em;text-transform:uppercase;margin-bottom:10px;">TAM</div>
       <div style="font-family:var(--serif);font-size:36px;color:var(--gold);line-height:1;margin-bottom:4px;">19.3M</div>
       <div style="font-family:var(--mono);font-size:9px;color:var(--dim);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:10px;">Global Food TEUs</div>
-      <div style="font-size:13px;color:var(--pale);line-height:1.5;">All food containers shipped globally.<br>Food is 10% of 192.9M total TEUs.<br>Revenue potential: <strong style="color:#fff;">€7.7B</strong></div>
+      <div style="font-size:13px;color:var(--pale);line-height:1.5;">All food containers shipped globally.<br>Food is 10% of 192.9M total TEUs.<br>Revenue potential: ~€965M.</div>
     </div>
 
     <div style="background:var(--deep);padding:20px 24px;border-right:1px solid var(--bord);">
       <div style="font-family:var(--mono);font-size:9px;color:var(--gold);letter-spacing:0.18em;text-transform:uppercase;margin-bottom:10px;">SAM</div>
       <div style="font-family:var(--serif);font-size:36px;color:var(--gold);line-height:1;margin-bottom:4px;">3.2M</div>
       <div style="font-family:var(--mono);font-size:9px;color:var(--dim);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:10px;">Top 20 Forwarder Food TEUs</div>
-      <div style="font-size:13px;color:var(--pale);line-height:1.5;">Reachable via the freight forwarder channel.<br>Top 20 handle 16.66% of global volume.<br>Revenue potential: <strong style="color:#fff;">€1.3B</strong></div>
+      <div style="font-size:13px;color:var(--pale);line-height:1.5;">Reachable via the freight forwarder channel.<br>Top 20 handle 16.66% of global volume.<br>Revenue potential: ~€160M.</div>
     </div>
 
     <div style="background:var(--deep);padding:20px 24px;">
       <div style="font-family:var(--mono);font-size:9px;color:var(--gold);letter-spacing:0.18em;text-transform:uppercase;margin-bottom:10px;">SOM</div>
       <div style="font-family:var(--serif);font-size:36px;color:var(--gold);line-height:1;margin-bottom:4px;">480K</div>
       <div style="font-family:var(--mono);font-size:9px;color:var(--dim);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:10px;">3 Anchor Forwarders</div>
-      <div style="font-size:13px;color:var(--pale);line-height:1.5;">Near-term target.<br>3 signed forwarder partners at avg food TEU volume.<br>Revenue potential: <strong style="color:#fff;">€192M</strong> at full penetration.</div>
+      <div style="font-size:13px;color:var(--pale);line-height:1.5;">Near-term target.<br>3 signed forwarder partners at avg food TEU volume.<br>Revenue potential: ~€24M at full penetration.</div>
     </div>
 
   </div>
 
-  <div style="font-family:var(--mono);font-size:10px;color:var(--dim);margin-top:8px;margin-bottom:20px;">TEU = one standard 20-foot shipping container equivalent. &nbsp;·&nbsp; Food only. Vitamins, cosmetics, and pharmaceuticals represent further expansion.</div>
+  <div style="font-family:var(--mono);font-size:10px;color:var(--dim);margin-top:8px;margin-bottom:20px;">TEU = one standard 20-foot shipping container. &nbsp;·&nbsp; Food only. Vitamins, cosmetics and pharmaceuticals represent further expansion of the same TAM.</div>
 
-  <div style="background:var(--card);border:1px solid var(--bord);border-radius:6px;padding:18px 20px;position:relative;overflow:hidden;max-width:100%;">
-    <div style="position:absolute;top:0;left:0;right:0;height:3px;background:var(--gold);"></div>
-    <div style="font-family:var(--serif);font-size:15px;color:#fff;margin-bottom:4px;margin-top:4px;">Per-Shipment Attestation Fee</div>
-    <div style="font-family:var(--mono);font-size:9px;color:var(--dim);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:14px;">Starting at 0.8% of shipment value · with multipliers based on transaction complexity</div>
-    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;">
-      <div>
-        <div style="font-family:var(--serif);font-size:22px;color:var(--gold);">€400</div>
-        <div style="font-family:var(--mono);font-size:9px;color:var(--dim);text-transform:uppercase;letter-spacing:0.08em;">Standard</div>
-        <div style="font-size:11px;color:var(--pale);margin-top:3px;">€50K shipment, basic documents</div>
-      </div>
-      <div>
-        <div style="font-family:var(--serif);font-size:22px;color:var(--gold);">€560</div>
-        <div style="font-family:var(--mono);font-size:9px;color:var(--dim);text-transform:uppercase;letter-spacing:0.08em;">Moderate</div>
-        <div style="font-size:11px;color:var(--pale);margin-top:3px;">€50K shipment, multiple certificates</div>
-      </div>
-      <div>
-        <div style="font-family:var(--serif);font-size:22px;color:var(--gold);">€800</div>
-        <div style="font-family:var(--mono);font-size:9px;color:var(--dim);text-transform:uppercase;letter-spacing:0.08em;">Complex</div>
-        <div style="font-size:11px;color:var(--pale);margin-top:3px;">€50K shipment, cold chain, multi-origin</div>
-      </div>
-      <div>
-        <div style="font-family:var(--serif);font-size:22px;color:var(--gold);">€1,000</div>
-        <div style="font-family:var(--mono);font-size:9px;color:var(--dim);text-transform:uppercase;letter-spacing:0.08em;">Exceptional</div>
-        <div style="font-size:11px;color:var(--pale);margin-top:3px;">€50K shipment, full compliance suite</div>
+  <!-- Pricing model -->
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+
+    <div style="background:var(--card);border:1px solid var(--bord);border-radius:6px;padding:18px 20px;position:relative;overflow:hidden;">
+      <div style="position:absolute;top:0;left:0;right:0;height:3px;background:var(--gold);"></div>
+      <div style="font-family:var(--serif);font-size:15px;color:#fff;margin-bottom:4px;margin-top:4px;">Compliance Subscription</div>
+      <div style="font-family:var(--mono);font-size:9px;color:var(--dim);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:14px;">Monthly · per importer</div>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;">
+        <div>
+          <div style="font-family:var(--serif);font-size:22px;color:var(--gold);">€199</div>
+          <div style="font-family:var(--mono);font-size:9px;color:var(--dim);text-transform:uppercase;letter-spacing:0.08em;">Importer</div>
+          <div style="font-size:11px;color:var(--pale);margin-top:3px;">Up to 50 shipments/mo</div>
+        </div>
+        <div>
+          <div style="font-family:var(--serif);font-size:22px;color:var(--gold);">€499</div>
+          <div style="font-family:var(--mono);font-size:9px;color:var(--dim);text-transform:uppercase;letter-spacing:0.08em;">Pro</div>
+          <div style="font-size:11px;color:var(--pale);margin-top:3px;">Up to 200 shipments/mo</div>
+        </div>
+        <div>
+          <div style="font-family:var(--serif);font-size:22px;color:var(--gold);">€899</div>
+          <div style="font-family:var(--mono);font-size:9px;color:var(--dim);text-transform:uppercase;letter-spacing:0.08em;">Enterprise</div>
+          <div style="font-size:11px;color:var(--pale);margin-top:3px;">Unlimited shipments</div>
+        </div>
       </div>
     </div>
+
+    <div style="background:var(--card);border:1px solid var(--bord);border-radius:6px;padding:18px 20px;position:relative;overflow:hidden;">
+      <div style="position:absolute;top:0;left:0;right:0;height:3px;background:var(--gold);"></div>
+      <div style="font-family:var(--serif);font-size:15px;color:#fff;margin-bottom:4px;margin-top:4px;">Per-Shipment Attestation</div>
+      <div style="font-family:var(--mono);font-size:9px;color:var(--dim);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:14px;">Per transaction · by complexity</div>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;">
+        <div>
+          <div style="font-family:var(--serif);font-size:22px;color:var(--gold);">€15</div>
+          <div style="font-family:var(--mono);font-size:9px;color:var(--dim);text-transform:uppercase;letter-spacing:0.08em;">Standard</div>
+          <div style="font-size:11px;color:var(--pale);margin-top:3px;">Basic documents</div>
+        </div>
+        <div>
+          <div style="font-family:var(--serif);font-size:22px;color:var(--gold);">€85</div>
+          <div style="font-family:var(--mono);font-size:9px;color:var(--dim);text-transform:uppercase;letter-spacing:0.08em;">Complex</div>
+          <div style="font-size:11px;color:var(--pale);margin-top:3px;">Multiple certificates</div>
+        </div>
+        <div>
+          <div style="font-family:var(--serif);font-size:22px;color:var(--gold);">€280</div>
+          <div style="font-family:var(--mono);font-size:9px;color:var(--dim);text-transform:uppercase;letter-spacing:0.08em;">Pharma</div>
+          <div style="font-size:11px;color:var(--pale);margin-top:3px;">Full compliance suite</div>
+        </div>
+      </div>
+    </div>
+
   </div>
 
   <div class="foot"><a href="http://www.veripura.com" target="_blank" style="color:inherit;text-decoration:none;">www.veripura.com</a> &nbsp;·&nbsp; Confidential</div>
 </div>
 
 
-<!-- ════ 6. WHY US ════ -->
-<div class="slide" data-slide="6">
+<!-- ════════════════════════════════
+     5. WHY US
+
+════════════════════════════════ -->
+<div class="slide" data-slide="5">
   <div class="logo"><img src="checkmark_gold.png" alt="">VeriPura</div>
   <div class="slide-tag">The Team</div>
 
@@ -503,7 +980,7 @@
       <img class="team-photo" src="Onno_no_BG.jpeg" alt="Onno Stienen">
       <div class="team-name">Onno Stienen</div>
       <div class="team-role">Co-Founder and CEO</div>
-      <p class="team-bio">Food entrepreneur<br>18 years as a food exporter and importer<br>Deep EU/ASEAN industry relationships</p>
+      <p class="team-bio">Food entrepreneur<br>18 years as food exporter and importer<br>Deep EU/Thai industry relationships</p>
       <a class="linkedin-link" href="https://www.linkedin.com/in/onnostienen/" target="_blank">
         <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
         LinkedIn
@@ -513,7 +990,7 @@
       <img class="team-photo" src="Thomas no BG.png" alt="Thomas Oberlin">
       <div class="team-name">Thomas Oberlin</div>
       <div class="team-role">Co-Founder and COO</div>
-      <p class="team-bio">Led 3 prior startups<br>Start-up GTM expertise<br>Patented, award-winning solutions<br>LATAM industry relationships</p>
+      <p class="team-bio">Led 3 prior startups<br>Patented and award winning solutions<br>Disrupted markets, delivered results</p>
       <a class="linkedin-link" href="https://www.linkedin.com/in/thomassoberlin/" target="_blank">
         <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
         LinkedIn
@@ -534,10 +1011,22 @@
   <div style="margin-top:28px;">
     <div class="label" style="margin-bottom:14px;">External Validation</div>
     <div class="pills">
-      <div class="pill"><div class="pill-dot"></div><strong>MVP live</strong> &nbsp;·&nbsp; <a href="http://core.veripura.com" target="_blank" style="color:var(--gold);text-decoration:none;">core.veripura.com</a></div>
-      <div class="pill"><div class="pill-dot"></div><strong>1 of 10</strong> &nbsp;·&nbsp; <a href="https://www.linkedin.com/posts/innovate360sg_spacef-spacefbatch7-activity-7453018567198789632-80t4?utm_source=share&utm_medium=member_desktop&rcm=ACoAAAAOkG4B_O_h-9h173uX5am-FD4crWdmBVo" target="_blank" style="color:var(--gold);text-decoration:none;">Space-F Food Innovation Accelerator</a> &nbsp;·&nbsp; 220 applicants</div>
-      <div class="pill"><div class="pill-dot"></div><strong>1 of 30</strong> &nbsp;·&nbsp; IOTA Blockchain Accelerator</div>
-      <div class="pill"><div class="pill-dot"></div><strong>4 pilots</strong> in discussion &nbsp;·&nbsp; 2 verbal commitments &nbsp;·&nbsp; May 2026</div>
+      <div class="pill">
+        <div class="pill-dot"></div>
+        <strong>MVP live</strong> &nbsp;·&nbsp; <a href="http://core.veripura.com" target="_blank" style="color:var(--gold);text-decoration:none;">core.veripura.com</a>
+      </div>
+      <div class="pill">
+        <div class="pill-dot"></div>
+        <strong>1 of 10</strong> &nbsp;·&nbsp; <a href="https://www.linkedin.com/posts/innovate360sg_spacef-spacefbatch7-activity-7453018567198789632-80t4?utm_source=share&utm_medium=member_desktop&rcm=ACoAAAAOkG4B_O_h-9h173uX5am-FD4crWdmBVo" target="_blank" style="color:var(--gold);text-decoration:none;">Space-F Food Innovation Accelerator</a> &nbsp;·&nbsp; 220 applicants
+      </div>
+      <div class="pill">
+        <div class="pill-dot"></div>
+        <strong>1 of 30</strong> &nbsp;·&nbsp; IOTA Blockchain Accelerator
+      </div>
+      <div class="pill">
+        <div class="pill-dot"></div>
+        <strong>4 pilots</strong> in discussion &nbsp;·&nbsp; 2 verbal commitments &nbsp;·&nbsp; May 2026
+      </div>
     </div>
   </div>
 
@@ -550,8 +1039,10 @@
 </div>
 
 
-<!-- ════ 7. THE ASK ════ -->
-<div class="slide dark" data-slide="7">
+<!-- ════════════════════════════════
+     4. THE ASK
+════════════════════════════════ -->
+<div class="slide dark" data-slide="6">
   <div class="logo"><img src="checkmark_gold.png" alt="">VeriPura</div>
   <div class="slide-tag">The Ask</div>
 
@@ -559,14 +1050,17 @@
 
   <div style="display:grid;grid-template-columns:1fr 1fr;grid-template-rows:auto auto auto;column-gap:32px;row-gap:16px;">
 
+    <!-- Row 1 Left: raise amount -->
     <div style="grid-column:1;grid-row:1;align-self:end;padding-bottom:16px;">
-      <div class="label" style="margin-bottom:8px;">Pre-seed Round</div>
-      <div style="font-family:var(--serif);font-size:clamp(28px,4vw,40px);color:var(--gold);line-height:1;margin-bottom:4px;">€50,000</div>
+      <div class="label" style="margin-bottom:8px;">Friends and Family Round</div>
+      <div style="font-family:var(--serif);font-size:clamp(28px,4vw,40px);color:var(--gold);line-height:1;margin-bottom:4px;">€75,000</div>
       <div style="font-family:var(--mono);font-size:10px;color:var(--dim);letter-spacing:0.12em;text-transform:uppercase;">Raising Now</div>
     </div>
 
+    <!-- Row 1 Right: empty -->
     <div style="grid-column:2;grid-row:1;"></div>
 
+    <!-- Row 2 Left: Terms card -->
     <div style="grid-column:1;grid-row:2;background:var(--card);border:1px solid var(--bord);border-radius:6px;padding:18px 20px;position:relative;overflow:hidden;">
       <div style="position:absolute;top:0;left:0;right:0;height:3px;background:var(--gold);"></div>
       <div style="font-family:var(--mono);font-size:9px;color:var(--gold);letter-spacing:0.18em;text-transform:uppercase;margin-bottom:10px;margin-top:4px;">You Receive</div>
@@ -586,11 +1080,12 @@
         </div>
         <div style="display:flex;justify-content:space-between;font-size:12.5px;">
           <span style="color:var(--sky);font-family:var(--mono);font-size:11px;letter-spacing:0.08em;">CONVERSION</span>
-          <span style="color:#fff;">At next priced round</span>
+          <span style="color:#fff;">Next priced round</span>
         </div>
       </div>
     </div>
 
+    <!-- Row 2 Right: Use of Proceeds -->
     <div style="grid-column:2;grid-row:2;background:var(--deep);border:1px solid var(--bord);border-radius:6px;padding:18px 20px;position:relative;overflow:hidden;">
       <div style="position:absolute;top:0;left:0;right:0;height:3px;background:var(--gold);"></div>
       <div style="font-family:var(--mono);font-size:9px;color:var(--gold);letter-spacing:0.15em;text-transform:uppercase;margin-bottom:12px;margin-top:4px;">Use of Proceeds</div>
@@ -604,6 +1099,7 @@
       </div>
     </div>
 
+    <!-- Row 3 Left: Token Warrant -->
     <div style="grid-column:1;grid-row:3;background:var(--card);border:1px solid var(--bord);border-radius:6px;padding:18px 20px;position:relative;overflow:hidden;">
       <div style="position:absolute;top:0;left:0;right:0;height:3px;background:var(--gold);"></div>
       <div style="font-family:var(--mono);font-size:9px;color:var(--gold);letter-spacing:0.18em;text-transform:uppercase;margin-bottom:10px;margin-top:4px;">Also Included</div>
@@ -611,6 +1107,7 @@
       <div style="font-size:13px;color:var(--pale);line-height:1.7;">An alternative path to returns. VeriPura is launching a token for use on the platform. Investors may purchase at a significant discount. Vested conversion mechanism for token to stablecoin.</div>
     </div>
 
+    <!-- Row 3 Right: Buttons + contact -->
     <div style="grid-column:2;grid-row:3;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;">
       <div class="cta-row" style="justify-content:center;">
         <a class="btn-primary" href="https://calendar.app.google/1iwueN5pPtQsDfvT9" target="_blank" style="width:230px;text-align:center;">Schedule a Meeting</a>
@@ -625,15 +1122,17 @@
 </div>
 
 
+<!-- Nav -->
 <div class="nav">
   <div class="nav-btn off" id="prev" onclick="go(-1)">&#8592;</div>
   <div class="nav-btn" id="next" onclick="go(1)">&#8594;</div>
 </div>
-<div class="counter" id="counter">01 / 07</div>
+<div class="counter" id="counter">01 / 06</div>
 
 <script>
   const slides = document.querySelectorAll('.slide');
   let cur = 0;
+
   function go(dir) {
     slides[cur].classList.remove('active');
     cur = Math.max(0, Math.min(slides.length - 1, cur + dir));
@@ -643,341 +1142,11 @@
     document.getElementById('counter').textContent =
       String(cur + 1).padStart(2,'0') + ' / ' + String(slides.length).padStart(2,'0');
   }
+
   document.addEventListener('keydown', e => {
     if (e.key === 'ArrowRight' || e.key === 'ArrowDown') go(1);
     if (e.key === 'ArrowLeft'  || e.key === 'ArrowUp')   go(-1);
   });
-</script>
-
-<style>
-#ff-chat-btn {
-  position: fixed; top: 90px; right: 80px; z-index: 9000;
-  display: flex; align-items: center; gap: 10px;
-  background: var(--gold); color: var(--navy); border: none;
-  border-radius: 40px; padding: 10px 18px 10px 13px;
-  font-family: var(--sans); font-size: 13px; font-weight: 700;
-  cursor: pointer; box-shadow: 0 4px 20px rgba(212,168,71,0.35);
-  transition: transform 0.18s, box-shadow 0.18s; white-space: nowrap;
-}
-#ff-chat-btn:hover { transform: translateY(2px); box-shadow: 0 8px 28px rgba(212,168,71,0.45); }
-#ff-chat-btn svg { flex-shrink: 0; }
-
-#ff-chat-panel {
-  position: fixed; top: 136px; right: 80px; width: 380px; max-height: 560px;
-  background: #0d1e33; border: 1px solid var(--bord); border-radius: 12px;
-  box-shadow: 0 20px 60px rgba(0,0,0,0.6); display: none; flex-direction: column;
-  z-index: 9001; overflow: hidden; font-family: var(--sans);
-}
-#ff-chat-panel.open { display: flex; }
-
-.ff-chat-header {
-  background: var(--navy); border-bottom: 1px solid var(--bord);
-  padding: 14px 16px; display: flex; align-items: center; gap: 12px; flex-shrink: 0;
-}
-.ff-chat-header-avatars { display: flex; flex-shrink: 0; }
-.ff-chat-header-avatars img { width: 34px; height: 34px; border-radius: 50%; object-fit: cover; border: 2px solid var(--gold); margin-left: -8px; }
-.ff-chat-header-avatars img:first-child { margin-left: 0; }
-.ff-chat-header-text { flex: 1; min-width: 0; }
-.ff-chat-header-title { font-family: var(--serif); font-size: 14px; color: #fff; line-height: 1.2; }
-.ff-chat-header-title span { color: var(--gold); }
-.ff-chat-header-sub { font-family: var(--mono); font-size: 9px; color: var(--dim); letter-spacing: 0.1em; text-transform: uppercase; margin-top: 3px; }
-.ff-chat-close { background: rgba(255,255,255,0.08); border: none; color: var(--dim); font-size: 15px; width: 28px; height: 28px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: background 0.15s; }
-.ff-chat-close:hover { background: rgba(255,255,255,0.16); color: #fff; }
-
-.ff-chat-messages { flex: 1; overflow-y: auto; padding: 16px 14px; display: flex; flex-direction: column; gap: 12px; scroll-behavior: smooth; }
-.ff-chat-messages::-webkit-scrollbar { width: 4px; }
-.ff-chat-messages::-webkit-scrollbar-track { background: transparent; }
-.ff-chat-messages::-webkit-scrollbar-thumb { background: var(--bord); border-radius: 2px; }
-
-.ff-chat-suggestions { padding: 0 14px 10px; display: flex; flex-wrap: wrap; gap: 7px; flex-shrink: 0; }
-.ff-chat-suggestion { background: rgba(212,168,71,0.1); border: 1px solid rgba(212,168,71,0.35); color: var(--gold); font-family: var(--mono); font-size: 10px; letter-spacing: 0.06em; padding: 6px 12px; border-radius: 20px; cursor: pointer; transition: background 0.15s; white-space: nowrap; }
-.ff-chat-suggestion:hover { background: rgba(212,168,71,0.2); }
-
-.ff-msg { display: flex; gap: 9px; align-items: flex-start; animation: ffFadeUp 0.25s ease both; }
-@keyframes ffFadeUp { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
-.ff-msg-avatar { width: 28px; height: 28px; border-radius: 50%; object-fit: cover; border: 1.5px solid var(--gold); flex-shrink: 0; margin-top: 2px; }
-.ff-msg-content { flex: 1; min-width: 0; }
-.ff-msg-name { font-family: var(--mono); font-size: 9px; color: var(--gold); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 4px; }
-.ff-msg-bubble { background: #152d4e; border: 1px solid var(--bord); border-radius: 2px 10px 10px 10px; padding: 10px 13px; font-size: 13px; color: var(--sky); line-height: 1.6; }
-.ff-msg-bubble a { color: var(--gold); text-decoration: underline; text-underline-offset: 2px; }
-.ff-msg-bubble strong { color: #fff; }
-.ff-msg.user { flex-direction: row-reverse; }
-.ff-msg.user .ff-msg-bubble { background: rgba(212,168,71,0.12); border-color: rgba(212,168,71,0.3); border-radius: 10px 2px 10px 10px; color: #fff; }
-
-.ff-typing { display: flex; gap: 5px; align-items: center; padding: 8px 4px; }
-.ff-typing span { width: 6px; height: 6px; border-radius: 50%; background: var(--dim); animation: ffBounce 1.1s infinite ease-in-out; }
-.ff-typing span:nth-child(2) { animation-delay: 0.18s; }
-.ff-typing span:nth-child(3) { animation-delay: 0.36s; }
-@keyframes ffBounce { 0%, 80%, 100% { transform: translateY(0); opacity: 0.4; } 40% { transform: translateY(-5px); opacity: 1; } }
-
-.ff-chat-input-row { border-top: 1px solid var(--bord); padding: 10px 12px; display: flex; gap: 8px; align-items: center; flex-shrink: 0; background: #0a1928; }
-.ff-chat-input { flex: 1; background: #0d1e33; border: 1px solid var(--bord); border-radius: 6px; color: #fff; font-family: var(--sans); font-size: 13px; padding: 9px 12px; outline: none; transition: border-color 0.15s; }
-.ff-chat-input:focus { border-color: var(--gold); }
-.ff-chat-input::placeholder { color: var(--dim); }
-.ff-chat-send { background: var(--gold); border: none; border-radius: 6px; color: var(--navy); font-size: 16px; width: 36px; height: 36px; cursor: pointer; display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: opacity 0.15s; }
-.ff-chat-send:hover { opacity: 0.85; }
-.ff-chat-send:disabled { opacity: 0.35; cursor: default; }
-.ff-mic-btn { background: transparent; border: 1px solid var(--bord); border-radius: 6px; color: var(--dim); font-size: 15px; width: 36px; height: 36px; cursor: pointer; display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: border-color 0.15s, color 0.15s; }
-.ff-mic-btn:hover { border-color: var(--gold); color: var(--gold); }
-.ff-mic-btn.ff-mic-active { border-color: var(--gold); color: var(--gold); background: rgba(212,168,71,0.1); }
-</style>
-
-<button id="ff-chat-btn" onclick="ffChatToggle()">
-  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-  Ask Onno &amp; Thomas
-</button>
-
-<div id="ff-chat-panel">
-  <div class="ff-chat-header">
-    <div class="ff-chat-header-avatars">
-      <img src="Onno_no_BG.jpeg" alt="Onno">
-      <img src="Thomas no BG.png" alt="Thomas">
-    </div>
-    <div class="ff-chat-header-text">
-      <div class="ff-chat-header-title">Veri<span>Pura</span> · Pre-seed</div>
-      <div class="ff-chat-header-sub">Onno &amp; Thomas answer</div>
-    </div>
-    <button class="ff-chat-close" onclick="ffChatToggle()">✕</button>
-  </div>
-  <div class="ff-chat-messages" id="ffMessages"></div>
-  <div class="ff-chat-suggestions" id="ffSuggestions">
-    <button class="ff-chat-suggestion" onclick="ffAsk(this.textContent)">What are the terms?</button>
-    <button class="ff-chat-suggestion" onclick="ffAsk(this.textContent)">Why invest now?</button>
-    <button class="ff-chat-suggestion" onclick="ffAsk(this.textContent)">What is a SAFE?</button>
-    <button class="ff-chat-suggestion" onclick="ffAsk(this.textContent)">What is the token warrant?</button>
-  </div>
-  <div class="ff-chat-input-row">
-    <button class="ff-mic-btn" id="ffMicBtn" onclick="ffToggleMic()" title="Speak your question">🎤</button>
-    <input type="text" class="ff-chat-input" id="ffInput" placeholder="Ask anything about this offer…" onkeydown="if(event.key==='Enter' && !event.shiftKey){ event.preventDefault(); ffSend(); }">
-    <button class="ff-chat-send" id="ffSendBtn" onclick="ffSend()">➤</button>
-  </div>
-</div>
-
-<script>
-const FF_ONNO_SRC   = 'Onno_no_BG.jpeg';
-const FF_THOMAS_SRC = 'Thomas no BG.png';
-
-const FF_SYSTEM = `IDENTITY TAG: MANDATORY ON EVERY RESPONSE: Begin every single response with either [ONNO] or [THOMAS] on its own. This tag controls which avatar and name is shown. It must appear even on short responses. No exceptions.
-
-You are an AI assistant representing VeriPura's founding team: Onno Stienen (CEO) and Thomas Oberlin (COO), on the VeriPura Pre-seed investment page. You answer questions warmly and honestly from people who know the founders personally or through their network. These are not professional investors, they are friends, family and close contacts considering a small personal investment.
-
-FOUNDER ROUTING:
-- Thomas handles: investment terms, SAFE structure, token warrant, use of proceeds, returns, incorporation, financial questions, what happens next after investing
-- Onno handles: the problem VeriPura solves, how the platform works, the market opportunity, regulations, the team, traction, why now
-
-IDENTIFICATION: FIRST MESSAGE ONLY: After the mandatory tag, open with "Onno here:" or "Thomas here:" then answer immediately. Never mention your name again in subsequent messages. The identity tag must still appear on every response.
-
-FOUNDER HANDOFF: If a question belongs to the other founder's domain, hand off in one sentence only, no answer:
-- Onno to Thomas: "[ONNO] Let me hand you to Thomas on that one."
-- Thomas to Onno: "[THOMAS] Let me hand you to Onno on that one."
-The handoff IS the full response. Do not answer in the same message.
-
-CO-FOUNDER QUESTIONS: If someone asks about a specific founder by name, that founder answers in first person always.
-
-TONE: Warm, personal, direct. These are people who know us or are one step removed. Not pitchy. Not corporate. Like a conversation over coffee. Use contractions. Be honest about where we are in the journey.
-
-RESPONSE LENGTH: HARD RULES:
-- Maximum 3 sentences per response. No exceptions.
-- Never dump all the terms or all the details at once. Answer only what was asked.
-- ONE follow-up question per response maximum. Never ask two questions.
-
-THE PRE-SEED OFFER: EXACT TERMS:
-- Round: Pre-seed
-- Amount raising: €50,000
-- Instrument: SAFE (Simple Agreement for Future Equity)
-- Minimum ticket: €5,000
-- Discount: 20% to next priced round
-- Conversion: At next priced round (the Seed round, currently being raised at €750K at a €3.75M post-money cap)
-- Also included: Token Warrant: right to purchase VeriPura platform tokens at a significant discount; vested conversion mechanism from token to stablecoin
-- Use of proceeds: Run 4 pilots with importers and freight forwarders; convert at least 2 to paying clients; advance platform and AI agent capabilities; file provisional patent on core technology; formally incorporate VeriPura
-
-WHAT A SAFE IS (explain simply if asked): A SAFE is not a loan and not shares yet. It is a promise that when VeriPura raises its next proper funding round at a fixed valuation, your investment converts into equity automatically, at a 20% discount to whatever price the new investors pay. You get in early, at better terms, without needing lawyers or complex paperwork now.
-
-THE TOKEN WARRANT (explain simply if asked): VeriPura is building a token that will be used on the platform by importers and freight forwarders. Pre-seed investors receive a warrant (a right) to buy those tokens at a significant discount before they are available to the public. There is also a vested mechanism to convert tokens to stablecoin over time, giving investors a liquid return path alongside the equity upside.
-
-THE SEED ROUND CONTEXT: The Pre-seed round feeds directly into the Seed round. The Seed is a €750K SAFE at a €3.75M post-money cap with a 20% discount. Pre-seed investors convert into the Seed round at that same 20% discount, meaning they effectively get equity at a lower price than Seed investors.
-
-THE COST OF A REJECTION (use naturally if relevant): A rejected shipment is a total loss for the importer. On a €50K shipment, VeriPura's fee is €400, less than 1% of what a single rejection costs. And port rejection is only tier one: errors that clear the border and reach retail shelves can trigger recalls costing €500K to €10M or more.
-
-REVENUE MODEL: VeriPura charges a per-transaction fee only. Starting at 0.8% of declared shipment value, with multipliers based on transaction complexity. There is no monthly subscription.
-
-THE SOLUTION: VeriPura delivers compliance document validation powered by orchestrated AI-Agents, with blockchain attestation. 50+ orchestrated AI agents validate every document at the purchase order stage, weeks before the shipment reaches the border. Errors are flagged and corrected at source, reducing compliance labor costs by an estimated 90%. Each validated document is hashed and committed on the IOTA blockchain: tamper-proof, globally auditable proof of compliance.
-
-MARKET SIZE: TAM: 19.3M TEUs (global food containers), €7.7B revenue potential. SAM: 3.2M TEUs (top 20 forwarders), €1.3B revenue potential. SOM: 480K TEUs (3 anchor forwarders), €192M at full penetration. Food only; vitamins, cosmetics, and pharmaceuticals represent further expansion.
-
-TRACTION AND VALIDATION (use naturally, not as a list):
-- MVP live at core.veripura.com
-- Selected as 1 of 10 from 220 applicants for the Space-F Food Innovation Accelerator
-- Selected for the IOTA Blockchain Accelerator (1 of 30)
-- 4 pilots in active discussion, 2 verbal commitments as of May 2026
-
-THE TEAM:
-- Onno Stienen, CEO: food entrepreneur, 18 years as a food exporter and importer, deep EU/ASEAN industry relationships, lived the problem VeriPura solves
-- Thomas Oberlin, COO: led 3 prior startups, start-up GTM expertise, patented, award-winning solutions, LATAM industry relationships
-- John Wotherspoon, Fractional CTO: blockchain entrepreneur, distributed systems architect, international solutions delivery
-
-GTM: VeriPura does not need to build a large sales force. Freight forwarders are the distribution channel. They touch every shipment and earn a revenue share on every client they bring. One signed freight forwarder unlocks hundreds of importers across multiple corridors simultaneously. Each forwarder relationship multiplies importer access; each document processed strengthens the AI. The distribution network already exists. Priority corridors: APAC, ASEAN, and Latin America into the US, EU+, and UK.
-
-SECTOR EXPANSION: Food today. Vitamins, cosmetics, and pharmaceuticals next. Same partner relationship, module upgrade only. Re-sell cost is a fraction of original customer acquisition cost.
-
-MOVING PEOPLE TO ACTION: always use inline links:
-- To schedule a meeting: https://calendar.app.google/1iwueN5pPtQsDfvT9
-- To request documents or ask questions by email: thomas@veripura.com or onno@veripura.com
-- Always phrase it as the founders reaching out, not the visitor
-
-WHEN TO MOVE TO ACTION:
-- After 2-3 exchanges where genuine interest is clear, invite them to take a next step naturally
-- Never push on first message
-- If someone says they want to invest, are ready, or asks how to proceed: give them the calendar link and Thomas's email in the same response
-- If someone wants more information first: offer to send documents via thomas@veripura.com
-- If someone is not ready but interested: "No problem, drop Thomas a note at thomas@veripura.com and we will keep you posted as the round fills"
-
-WHAT NOT TO DO:
-- Never say "Thanks for your interest" or "Feel free to reach out"
-- Never give specific financial, tax or legal advice
-- Never claim guaranteed returns
-- Never pressure anyone
-- Never mention competitor products
-- Do not refer to VeriPura as a SaaS company
-- Do not say "AI-powered", say "orchestrated AI-Agents" or "50+ orchestrated AI agents"
-- Never say "the physical product is almost never the problem", focus on the high percentage of rejections caused by preventable paperwork errors (39% in 2025)
-- Never say VeriPura does not need to build a sales force, say it does not need to build a large sales force
-
-CURRENT DATE: May 2026. The Pre-seed round is open now. The Seed round is running in parallel.`;
-
-let ffHistory = [];
-let ffPanelOpen = false;
-
-function ffChatToggle() {
-  ffPanelOpen = !ffPanelOpen;
-  document.getElementById('ff-chat-panel').classList.toggle('open', ffPanelOpen);
-  if (ffPanelOpen && ffHistory.length === 0) ffOpeningMessage();
-}
-
-function ffOpeningMessage() {
-  const opening = "Thomas here, glad you stopped by. This is our Pre-seed round, and the minimum is just €5,000, so it's designed to be accessible. What would you like to know?";
-  ffAddBotMessage('thomas', 'Thomas Oberlin', opening);
-  ffHistory.push({ role: 'assistant', content: opening });
-}
-
-function ffAddUserMessage(text) {
-  const msgs = document.getElementById('ffMessages');
-  const div = document.createElement('div');
-  div.className = 'ff-msg user';
-  div.innerHTML = `<div class="ff-msg-bubble">${ffEscape(text)}</div>`;
-  msgs.appendChild(div);
-  msgs.scrollTop = msgs.scrollHeight;
-}
-
-function ffAddBotMessage(founderKey, founderName, text) {
-  const msgs = document.getElementById('ffMessages');
-  const src = founderKey === 'onno' ? FF_ONNO_SRC : FF_THOMAS_SRC;
-  const div = document.createElement('div');
-  div.className = 'ff-msg';
-  div.innerHTML = `
-    <img class="ff-msg-avatar" src="${src}" alt="${founderName}">
-    <div class="ff-msg-content">
-      <div class="ff-msg-name">${founderName}</div>
-      <div class="ff-msg-bubble">${ffFormat(text)}</div>
-    </div>`;
-  msgs.appendChild(div);
-  msgs.scrollTop = msgs.scrollHeight;
-}
-
-function ffAddTyping() {
-  const msgs = document.getElementById('ffMessages');
-  const div = document.createElement('div');
-  div.className = 'ff-msg';
-  div.id = 'ffTyping';
-  div.innerHTML = `<div class="ff-msg-bubble" style="padding:8px 14px;"><div class="ff-typing"><span></span><span></span><span></span></div></div>`;
-  msgs.appendChild(div);
-  msgs.scrollTop = msgs.scrollHeight;
-}
-
-function ffRemoveTyping() {
-  const t = document.getElementById('ffTyping');
-  if (t) t.remove();
-}
-
-function ffDetectFounder(raw) {
-  if (/^\[ONNO\]/i.test(raw.trim())) return { key: 'onno', name: 'Onno Stienen' };
-  return { key: 'thomas', name: 'Thomas Oberlin' };
-}
-
-function ffFormat(text) {
-  let t = ffEscape(text);
-  t = t.replace(/(https?:\/\/[^\s<]+)/g, '<a href="$1" target="_blank">$1</a>');
-  t = t.replace(/([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})/g, '<a href="mailto:$1">$1</a>');
-  return t;
-}
-
-function ffEscape(str) {
-  return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
-}
-
-function ffAsk(text) {
-  document.getElementById('ffSuggestions').style.display = 'none';
-  document.getElementById('ffInput').value = text;
-  ffSend();
-}
-
-async function ffSend() {
-  const input   = document.getElementById('ffInput');
-  const sendBtn = document.getElementById('ffSendBtn');
-  const text    = input.value.trim();
-  if (!text) return;
-  document.getElementById('ffSuggestions').style.display = 'none';
-  ffAddUserMessage(text);
-  input.value = '';
-  sendBtn.disabled = true;
-  ffAddTyping();
-  ffHistory.push({ role: 'user', content: text });
-  try {
-    const response = await fetch('https://veripura-chat.tomsoberlin.workers.dev', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        model: 'claude-sonnet-4-20250514',
-        max_tokens: 400,
-        system: FF_SYSTEM,
-        messages: ffHistory
-      })
-    });
-    const data = await response.json();
-    const rawReply = data.content && data.content[0]
-      ? data.content[0].text
-      : "[THOMAS] Sorry, something went wrong, drop me a note at thomas@veripura.com and I'll come straight back to you.";
-    const reply   = rawReply.replace(/^\s*\[(ONNO|THOMAS)\]\s*/i, '').trim();
-    const founder = ffDetectFounder(rawReply);
-    ffHistory.push({ role: 'assistant', content: reply });
-    ffRemoveTyping();
-    ffAddBotMessage(founder.key, founder.name, reply);
-  } catch(e) {
-    ffRemoveTyping();
-    ffAddBotMessage('thomas', 'Thomas Oberlin', "Sorry, something went wrong on my end, drop me a line at thomas@veripura.com and I'll come straight back to you.");
-  }
-  sendBtn.disabled = false;
-  input.focus();
-}
-
-let ffRecognition = null;
-let ffMicRunning  = false;
-
-function ffToggleMic() {
-  const btn = document.getElementById('ffMicBtn');
-  const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-  if (!SpeechRecognition) { alert('Voice input works in Chrome and Edge.'); return; }
-  if (ffMicRunning) { ffRecognition.stop(); return; }
-  ffRecognition = new SpeechRecognition();
-  ffRecognition.lang = 'en-US';
-  ffRecognition.interimResults = false;
-  ffRecognition.maxAlternatives = 1;
-  ffRecognition.onstart = () => { ffMicRunning = true; btn.classList.add('ff-mic-active'); document.getElementById('ffInput').placeholder = 'Listening…'; };
-  ffRecognition.onresult = (e) => { document.getElementById('ffInput').value = e.results[0][0].transcript; ffMicRunning = false; btn.classList.remove('ff-mic-active'); document.getElementById('ffInput').placeholder = 'Ask anything about this offer…'; setTimeout(ffSend, 400); };
-  ffRecognition.onerror = () => { ffMicRunning = false; btn.classList.remove('ff-mic-active'); document.getElementById('ffInput').placeholder = 'Ask anything about this offer…'; };
-  ffRecognition.onend = () => { ffMicRunning = false; btn.classList.remove('ff-mic-active'); document.getElementById('ffInput').placeholder = 'Ask anything about this offer…'; };
-  ffRecognition.start();
-}
 </script>
 </body>
 </html>
